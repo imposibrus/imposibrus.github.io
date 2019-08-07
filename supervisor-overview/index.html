@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ru-RU" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+
+
+
+	<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Supervisor — система управления процессами — Заметки программера</title>
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//s.w.org">
+<link href="https://fonts.gstatic.com" crossorigin rel="preconnect">
+
+
+
+<link rel="stylesheet" id="twentyfifteen-fonts-css" href="https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700&subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext" type="text/css" media="all">
+<link rel="stylesheet" id="genericons-css" href="https://imposibrus.github.io/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyfifteen-style-css" href="https://imposibrus.github.io/wp-content/themes/twentyfourteen-child/style.css" type="text/css" media="all">
+<style id="twentyfifteen-style-inline-css" type="text/css">
+
+			.post-navigation .nav-previous { background-image: url(https://imposibrus.github.io/wp-content/uploads/2014/02/redis-300dpi_-672x372.png); }
+			.post-navigation .nav-previous .post-title, .post-navigation .nav-previous a:hover .post-title, .post-navigation .nav-previous .meta-nav { color: #fff; }
+			.post-navigation .nav-previous a:before { background-color: rgba(0, 0, 0, 0.4); }
+
+</style>
+<link rel="stylesheet" id="twentyfifteen-block-style-css" href="https://imposibrus.github.io/wp-content/themes/twentyfifteen/css/blocks.css" type="text/css" media="all">
+
+
+<link rel="stylesheet" id="enlighterjs-css" href="https://imposibrus.github.io/wp-content/plugins/enlighter/cache/enlighterjs.min.css" type="text/css" media="all">
+<script type="text/javascript" src="https://imposibrus.github.io/wp-includes/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-includes/js/jquery/jquery-migrate.min.js"></script>
+
+
+
+
+
+
+
+
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f5f5f5; }
+</style>
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Supervisor — система управления процессами">
+<meta property="og:url" content="https://imposibrus.github.io/supervisor-overview/">
+<meta property="og:description" content="Если на вашем сервере работает несколько разных приложений (например, Node.js-, Ruby- или Python-приложение или PHP-скрипт, который должен быть всегда запущен (daemon)), то Supervisor — то, ч…">
+<meta property="article:published_time" content="2014-02-23T18:22:13+00:00">
+<meta property="article:modified_time" content="2019-08-07T20:40:32+00:00">
+<meta property="og:site_name" content="Заметки программера">
+<meta property="og:image" content="https://imposibrus.github.io/wp-content/uploads/2014/02/supervisor_optim.png">
+<meta property="og:image:width" content="1855">
+<meta property="og:image:height" content="1029">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:text:title" content="Supervisor — система управления процессами">
+<meta name="twitter:image" content="https://imposibrus.github.io/wp-content/uploads/2014/02/supervisor_optim.png">
+<meta name="twitter:card" content="summary_large_image">
+
+
+</head>
+
+<body class="post-template-default single single-post postid-52 single-format-standard custom-background">
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Перейти к содержимому</a>
+
+	<div id="sidebar" class="sidebar">
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-branding">
+										<p class="site-title"><a href="https://imposibrus.github.io/" rel="home">Заметки программера</a></p>
+												<p class="site-description">Решения нестандартных задач</p>
+										<button class="secondary-toggle">Меню и виджеты</button>
+			</div>
+		</header>
+
+			<div id="secondary" class="secondary">
+
+
+
+					<div id="widget-area" class="widget-area" role="complementary">
+				<aside id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://imposibrus.github.io/">
+				<label>
+					<span class="screen-reader-text">Найти:</span>
+					<input type="search" class="search-field" placeholder="Поиск…" value="" name="s">
+				</label>
+				<input type="submit" class="search-submit screen-reader-text" value="Поиск">
+			</form></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">Свежие записи</h2>		<ul>
+											<li>
+					<a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/">Иногда Docker-контейнеры перестают быть доступны по сети</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/jenkins-for-ios-building/">Настройка Jenkins для сборки iOS-проекта</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/using-separate-php-fpm-pools-with-apache-2-with-mod_fastcgi/">Использование разных пулов PHP-FPM в Apache 2 с mod_fastcgi</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/supervisor-apache-and-nginx-users-separating/">Защищено: Разделение пользователей с Supervisor, Apache и NGINX</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/nvm-auto-switching/">Автоматическое переключение версии Node.js с помощью NVM и файла .nvmrc для Fish shell</a>
+									</li>
+					</ul>
+		</aside><aside id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">Свежие комментарии</h2><ul id="recentcomments"></ul></aside><aside id="archives-2" class="widget widget_archive"><h2 class="widget-title">Архивы</h2>		<ul>
+			<li><a href="https://imposibrus.github.io/2018/01/">Январь 2018</a></li>
+	<li><a href="https://imposibrus.github.io/2017/09/">Сентябрь 2017</a></li>
+	<li><a href="https://imposibrus.github.io/2016/07/">Июль 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/06/">Июнь 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/05/">Май 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/04/">Апрель 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/03/">Март 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2014/02/">Февраль 2014</a></li>
+		</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h2 class="widget-title">Рубрики</h2>		<ul>
+	<li class="cat-item cat-item-14"><a href="https://imposibrus.github.io/category/apache/">Apache</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://imposibrus.github.io/category/centos/">CentOS</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://imposibrus.github.io/category/docker/">Docker</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://imposibrus.github.io/category/node-js/">Node.js</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://imposibrus.github.io/category/php/">PHP</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://imposibrus.github.io/category/php-fpm/">PHP-FPM</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://imposibrus.github.io/category/process-monitoring/">Process monitoring</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://imposibrus.github.io/category/redis/">Redis</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://imposibrus.github.io/category/socket-io/">socket.io</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://imposibrus.github.io/category/supervisor/">Supervisor</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://imposibrus.github.io/category/ubuntu/">Ubuntu</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://imposibrus.github.io/category/untitled/">Untitled</a>
+</li>
+		</ul>
+</aside><aside id="meta-2" class="widget widget_meta"><h2 class="widget-title">Мета</h2>			<ul>
+						<li><a href="https://imposibrus.github.io/wp-login.php">Войти</a></li>
+			<li><a href="https://imposibrus.github.io/feed/"><abbr title="Really Simple Syndication">RSS</abbr> записей</a></li>
+			<li><a href="https://imposibrus.github.io/comments/feed/"><abbr title="Really Simple Syndication">RSS</abbr> комментариев</a></li>
+			<li><a href="https://ru.wordpress.org/" title="Сайт работает на WordPress — современной персональной платформе для публикаций.">WordPress.org</a></li>			</ul>
+			</aside>			</div>
+
+	</div>
+
+	</div>
+
+	<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+
+<article id="post-52" class="post-52 post type-post status-publish format-standard has-post-thumbnail hentry category-centos category-process-monitoring category-supervisor category-ubuntu">
+
+		<div class="post-thumbnail">
+			<img width="672" height="372" src="https://imposibrus.github.io/wp-content/uploads/2014/02/supervisor_optim-672x372.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" srcset="https://imposibrus.github.io/wp-content/uploads/2014/02/supervisor_optim-672x372.png 672w,https://imposibrus.github.io/wp-content/uploads/2014/02/supervisor_optim-300x166.png 300w,https://imposibrus.github.io/wp-content/uploads/2014/02/supervisor_optim-1024x568.png 1024w,https://imposibrus.github.io/wp-content/uploads/2014/02/supervisor_optim-1038x576.png 1038w" sizes="(max-width: 672px) 100vw, 672px">	</div>
+
+
+	<header class="entry-header">
+		<h1 class="entry-title">Supervisor — система управления процессами</h1>	</header>
+
+	<div class="entry-content">
+		<p>Если на вашем сервере работает несколько разных приложений (например, Node.js-, Ruby- или Python-приложение или PHP-скрипт, который должен быть всегда запущен (daemon)), то Supervisor — то, что вам нужно. Он позволяет управлять процессами из одного файла конфигурации:</p>
+<ul>
+<li>Указывать файлы логов для каждого приложения;</li>
+<li>управлять политиками запуска и перезапуска;</li>
+<li>указывать от какого пользователя запускать приложения и т.д.</li>
+</ul>
+<p>В моем случае есть PHP-скрипт с Websockets-сервером, который должен быть всегда запущен. В начале я запускал его просто через cron, поставив выполнение cron-а на каждый час. Если скрипт падал, то через час он восстанавливался (меньший интервал приводил к багам), это нам не очень подходило. Поэтому я начал искать другие варианты, про Supervisor я слышал уже давно, но в начале он мне показался сложным в настройке, поэтому ушел на дальнюю полку.</p>
+<p>Сегодня я постараюсь рассказать как установить и настроить Supervisor на Ubuntu и CentOS.<span id="more-52"></span></p>
+<h2>Установка</h2>
+<p>Следующие шаги одинаковы для обоих систем. Разница только в пакетном менеджере (у CentOS — <strong>yum</strong>, у Ubuntu — <strong>apt-get</strong>), если у вас CentOS, замените в примере apt-get на yum. Сперва установим Python, а потом с помощью него сам Supervisor и создадим стандартный файл конфигурации.</p>
+<pre class="crayon:false">$ sudo apt-get install python-setuptools
+$ sudo easy_install supervisor
+$ sudo echo_supervisord_conf > /etc/supervisord.conf</pre>
+<p>Если при выполнении последней команды выходит ошибка доступа, то выполните сначала echo_supervisord_conf, скопируйте вывод, создайте файл /etc/supervisord.conf и вставьте вывод туда.</p>
+<p>Сделаем Supervisor сервисом и включим автозапуск:</p>
+<h3>CentOS</h3>
+<pre class="crayon:false">$ curl -L https://github.com/Supervisor/initscripts/raw/master/redhat-init-mingalevme > /tmp/supervisord
+$ sudo mv /tmp/supervisord /etc/init.d/
+$ sudo chmod +x /etc/init.d/supervisord</pre>
+<p>Если нет доступа к интернету или скрипт переехал на другой адрес, то вот его содержимое:<br>
+<span style="line-height: 1.6471;"><div class="spoiler">
+					<div class="title">Содержимое init-скрпита</div>
+					<div class="text"><br>
+<pre class="EnlighterJSRAW" data-enlighter-language="sh" data-enlighter-title="">#!/bin/bash
+#
+# supervisord   This scripts turns supervisord on
+#
+# Author:       Mike McGrath <mmcgrath@redhat.com> (based off yumupdatesd)
+#               Jason Koppe <jkoppe@indeed.com> adjusted to read sysconfig,
+#                   use supervisord tools to start/stop, conditionally wait
+#                   for child processes to shutdown, and startup later
+#               Mikhail Mingalev <mingalevme@gmail.com> Merged
+#                   redhat-init-jkoppe and redhat-sysconfig-jkoppe, and
+#                   made the script "simple customizable".
+#
+# chkconfig:    345 83 04
+#
+# description:  supervisor is a process control utility.  It has a web based
+#               xmlrpc interface as well as a few other nifty features.
+#               Script was originally written by Jason Koppe <jkoppe@indeed.com>.
+#
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+set -a
+
+PREFIX=/usr
+
+SUPERVISORD=$PREFIX/bin/supervisord
+SUPERVISORCTL=$PREFIX/bin/supervisorctl
+
+PIDFILE=/var/run/supervisord.pid
+LOCKFILE=/var/lock/subsys/supervisord
+
+OPTIONS="-c /etc/supervisord.conf"
+
+# unset this variable if you don't care to wait for child processes to shutdown before removing the $LOCKFILE-lock
+WAIT_FOR_SUBPROCESSES=yes
+
+# remove this if you manage number of open files in some other fashion
+ulimit -n 96000
+
+RETVAL=0
+
+running_pid()
+{
+    # Check if a given process pid's cmdline matches a given name
+    pid=$1
+    name=$2
+    [ -z "$pid" ] && return 1
+    [ ! -d /proc/$pid ] && return 1
+    (cat /proc/$pid/cmdline | tr "\000" "\n"|grep -q $name) || return 1
+    return 0
+}
+
+running()
+{
+# Check if the process is running looking at /proc
+# (works for all users)
+
+    # No pidfile, probably no daemon present
+    [ ! -f "$PIDFILE" ] && return 1
+    # Obtain the pid and check it against the binary name
+    pid=`cat $PIDFILE`
+    running_pid $pid $SUPERVISORD || return 1
+    return 0
+}
+
+start() {
+        echo "Starting supervisord: "
+
+        if [ -e $PIDFILE ]; then
+   echo "ALREADY STARTED"
+    return 1
+  fi
+
+  # start supervisord with options from sysconfig (stuff like -c)
+        $SUPERVISORD $OPTIONS
+
+  # show initial startup status
+ $SUPERVISORCTL $OPTIONS status
+
+  # only create the subsyslock if we created the PIDFILE
+        [ -e $PIDFILE ] && touch $LOCKFILE
+}
+
+stop() {
+        echo -n "Stopping supervisord: "
+        $SUPERVISORCTL $OPTIONS shutdown
+ if [ -n "$WAIT_FOR_SUBPROCESSES" ]; then
+            echo "Waiting roughly 60 seconds for $PIDFILE to be removed after child processes exit"
+            for sleep in  2 2 2 2 4 4 4 4 8 8 8 8 last; do
+                if [ ! -e $PIDFILE ] ; then
+                    echo "Supervisord exited as expected in under $total_sleep seconds"
+                    break
+                else
+                    if [[ $sleep -eq "last" ]] ; then
+                        echo "Supervisord still working on shutting down. We've waited roughly 60 seconds, we'll let it do its thing from here"
+                        return 1
+                    else
+                        sleep $sleep
+                        total_sleep=$(( $total_sleep + $sleep ))
+                    fi
+
+                fi
+            done
+        fi
+
+        # always remove the subsys. We might have waited a while, but just remove it at this point.
+        rm -f $LOCKFILE
+}
+
+restart() {
+        stop
+        start
+}
+
+case "$1" in
+    start)
+        start
+        RETVAL=$?
+        ;;
+    stop)
+        stop
+        RETVAL=$?
+        ;;
+    restart|force-reload)
+        restart
+        RETVAL=$?
+        ;;
+    reload)
+        $SUPERVISORCTL $OPTIONS reload
+        RETVAL=$?
+        ;;
+    condrestart)
+        [ -f $LOCKFILE ] && restart
+        RETVAL=$?
+        ;;
+    status)
+        $SUPERVISORCTL status
+        if running ; then
+            RETVAL=0
+        else
+            RETVAL=1
+        fi
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|reload|force-reload|condrestart}"
+        exit 1
+esac
+
+exit $RETVAL</pre><br>
+</div>
+				</div>
+<pre class="crayon:false">$ sudo chkconfig --level 345 supervisord on</pre>
+<p>Теперь можно стартовать Supervisor командой sudo service supervisord start.</p>
+<h3>Ubuntu</h3>
+<pre class="crayon:false">$ curl -L https://github.com/Supervisor/initscripts/raw/master/ubuntu > /tmp/supervisord
+$ sudo mv /tmp/supervisord /etc/init.d/
+$ sudo chmod +x /etc/init.d/supervisord</pre>
+<p>Проверьте в какой директории установлен Supervisor командой</p>
+<pre class="crayon:false">$ which supervisord</pre>
+<p>Если он установлен в /usr/local/bin, то отредактируйте тридцатую строку в /etc/init.d/supervisord (DAEMON=/usr/bin/supervisord), поправьте путь.</p>
+<div class="spoiler">
+					<div class="title">Содержимое файла /etc/init.d/supervisord</div>
+					<div class="text">
+<pre class="EnlighterJSRAW" data-enlighter-language="sh" data-enlighter-title="">#! /bin/sh
+#
+# Downloaded from:
+# http://bazaar.launchpad.net/~ubuntu-branches/ubuntu/trusty/supervisor/trusty/view/head:/debian/supervisor.init
+#
+# skeleton  example file to build /etc/init.d/ scripts.
+#    This file should be used to construct scripts for /etc/init.d.
+#
+#    Written by Miquel van Smoorenburg <miquels@cistron.nl>.
+#    Modified for Debian
+#    by Ian Murdock <imurdock@gnu.ai.mit.edu>.
+#               Further changes by Javier Fernandez-Sanguino <jfs@debian.org>
+#
+# Version: @(#)skeleton  1.9  26-Feb-2001  miquels@cistron.nl
+#
+### BEGIN INIT INFO
+# Provides:          supervisor
+# Required-Start:    $remote_fs $network $named
+# Required-Stop:     $remote_fs $network $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/stop supervisor
+# Description:       Start/stop supervisor daemon and its configured
+#                    subprocesses.
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/local/bin/supervisord
+NAME=supervisord
+DESC=supervisor
+
+test -x $DAEMON || exit 0
+
+LOGDIR=/var/log/supervisor
+PIDFILE=/var/run/$NAME.pid
+DODTIME=5                   # Time to wait for the server to die, in seconds
+                            # If this value is set too low you might not
+                            # let some servers to die gracefully and
+                            # 'restart' will not work
+
+# Include supervisor defaults if available
+if [ -f /etc/default/supervisor ] ; then
+  . /etc/default/supervisor
+fi
+DAEMON_OPTS="-c /etc/supervisord.conf $DAEMON_OPTS"
+
+set -e
+
+running_pid()
+{
+    # Check if a given process pid's cmdline matches a given name
+    pid=$1
+    name=$2
+    [ -z "$pid" ] && return 1
+    [ ! -d /proc/$pid ] &&  return 1
+    (cat /proc/$pid/cmdline | tr "\000" "\n"|grep -q $name) || return 1
+    return 0
+}
+
+running()
+{
+# Check if the process is running looking at /proc
+# (works for all users)
+
+    # No pidfile, probably no daemon present
+    [ ! -f "$PIDFILE" ] && return 1
+    # Obtain the pid and check it against the binary name
+    pid=`cat $PIDFILE`
+    running_pid $pid $DAEMON || return 1
+    return 0
+}
+
+force_stop() {
+# Forcefully kill the process
+    [ ! -f "$PIDFILE" ] && return
+    if running ; then
+        kill -15 $pid
+        # Is it really dead?
+        [ -n "$DODTIME" ] && sleep "$DODTIME"s
+        if running ; then
+            kill -9 $pid
+            [ -n "$DODTIME" ] && sleep "$DODTIME"s
+            if running ; then
+                echo "Cannot kill $LABEL (pid=$pid)!"
+                exit 1
+            fi
+        fi
+    fi
+    rm -f $PIDFILE
+    return 0
+}
+
+case "$1" in
+  start)
+  echo -n "Starting $DESC: "
+  start-stop-daemon --start --quiet --pidfile $PIDFILE \
+   --startas $DAEMON -- $DAEMON_OPTS
+ test -f $PIDFILE || sleep 1
+        if running ; then
+            echo "$NAME."
+        else
+            echo " ERROR."
+        fi
+ ;;
+  stop)
+ echo -n "Stopping $DESC: "
+  start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+ echo "$NAME."
+ ;;
+  force-stop)
+ echo -n "Forcefully stopping $DESC: "
+        force_stop
+        if ! running ; then
+            echo "$NAME."
+        else
+            echo " ERROR."
+        fi
+ ;;
+  #reload)
+  #
+ # If the daemon can reload its config files on the fly
+  # for example by sending it SIGHUP, do it here.
+ #
+ # If the daemon responds to changes in its config file
+  # directly anyway, make this a do-nothing entry.
+  #
+ # echo "Reloading $DESC configuration files."
+ # start-stop-daemon --stop --signal 1 --quiet --pidfile \
+  # /var/run/$NAME.pid --exec $DAEMON
+  #;;
+  force-reload)
+ #
+ # If the "reload" option is implemented, move the "force-reload"
+  # option to the "reload" entry above. If not, "force-reload" is
+ # just the same as "restart" except that it does nothing if the
+ #   daemon isn't already running.
+  # check wether $DAEMON is running. If so, restart
+ start-stop-daemon --stop --test --quiet --pidfile $PIDFILE \
+        --startas $DAEMON \
+ && $0 restart \
+  || exit 0
+ ;;
+  restart)
+    echo -n "Restarting $DESC: "
+    start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+  [ -n "$DODTIME" ] && sleep $DODTIME
+ start-stop-daemon --start --quiet --pidfile $PIDFILE \
+   --startas $DAEMON -- $DAEMON_OPTS
+ echo "$NAME."
+ ;;
+  status)
+    echo -n "$LABEL is "
+    if running ;  then
+        echo "running"
+    else
+        echo " not running."
+        exit 1
+    fi
+    ;;
+  *)
+ N=/etc/init.d/$NAME
+ # echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
+  echo "Usage: $N {start|stop|restart|force-reload|status|force-stop}" >&2
+ exit 1
+  ;;
+esac
+
+exit 0</pre><br>
+</div>
+				</div>
+<p>Если вы следовали инструкции и файл конфигурации находится в /etc/supervisord.conf, то отредактируйте файл /etc/init.d/supervisord на 47 строке замените <code>DAEMON_OPTS="-c /etc/supervisor/supervisord.conf $DAEMON_OPTS"</code> на <code>DAEMON_OPTS="-c /etc/supervisord.conf $DAEMON_OPTS"</code></p>
+<p>Выполняем</p>
+<pre class="crayon:false"> $ sudo update-rc.d supervisord defaults</pre>
+<p>и сервис теперь стартует при запуске системы.</p>
+<h2>Конфигурация</h2>
+<p>Открываем файл конфигурации:</p>
+<pre class="crayon:false">$ sudo vi /etc/supervisord.conf</pre>
+<p>Ищем блок [program:theprogramname] — пример конфигурации программы. Воспользуйтесь этим примером для создания своего конфига. Каждая строка там прокомментирована, сложностей, я думаю, не возникнет. Для примера мой блок конфига PHP-скрипта с Websockets:<br>
+</p><div class="spoiler">
+					<div class="title">Спойлер</div>
+					<div class="text">
+<pre class="EnlighterJSRAW" data-enlighter-language="ini" data-enlighter-title="">[program:websocket]
+command=/usr/bin/php server.php
+process_name=websocket
+directory=/var/www/websocket/bin/
+autostart=true
+autorestart=true
+user=user
+stdout_logfile=/var/www/logs/websocket_stdout.log
+stdout_logfile_maxbytes=10MB
+stderr_logfile=/var/www/logs/websocket_stderr.log
+stderr_logfile_maxbytes=10MB</pre><br>
+</div>
+				</div>
+<p>Надеюсь информация была вам полезна.</p>
+	</span></p></div>
+
+
+	<footer class="entry-footer">
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/supervisor-overview/" rel="bookmark"><time class="entry-date published" datetime="2014-02-23T22:22:13+00:00">23.02.2014</time><time class="updated" datetime="2019-08-08T00:40:32+00:00">08.08.2019</time></a></span><span class="byline"><span class="author vcard"><span class="screen-reader-text">Автор </span><a class="url fn n" href="https://imposibrus.github.io/author/imposibrus/">imposibrus</a></span></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/centos/" rel="category tag">CentOS</a>, <a href="https://imposibrus.github.io/category/process-monitoring/" rel="category tag">Process monitoring</a>, <a href="https://imposibrus.github.io/category/supervisor/" rel="category tag">Supervisor</a>, <a href="https://imposibrus.github.io/category/ubuntu/" rel="category tag">Ubuntu</a></span>			</footer>
+
+</article>
+
+<div id="disqus_thread"></div>
+
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://imposibrus.github.io/install-redis-ubuntu-and-centos/" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">Установка Redis на Ubuntu и CentOS</span></a></div><div class="nav-next"><a href="https://imposibrus.github.io/traffpro-rescue/" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">Воскрешаем TraffPro</span></a></div></div>
+	</nav>
+		</main>
+	</div>
+
+
+	</div>
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+									<a href="https://ru.wordpress.org/" class="imprint">
+				Сайт работает на WordPress			</a>
+		</div>
+	</footer>
+
+</div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var countVars = {"disqusShortname":"imposibrus"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/plugins/disqus-comment-system/public/js/comment_count.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var embedVars = {"disqusConfig":{"integration":"wordpress 3.0.17"},"disqusIdentifier":"52 https:\/\/imposibrus.github.io\/?p=52","disqusShortname":"imposibrus","disqusTitle":"Supervisor \u2014 \u0441\u0438\u0441\u0442\u0435\u043c\u0430 \u0443\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u0438\u044f \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0430\u043c\u0438","disqusUrl":"https:\/\/imposibrus.github.io\/supervisor-overview\/","postId":"52"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/plugins/disqus-comment-system/public/js/comment_embed.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/themes/twentyfourteen-child/main.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/themes/twentyfifteen/js/skip-link-focus-fix.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var screenReaderText = {"expand":"<span class=\"screen-reader-text\">\u0440\u0430\u0441\u043a\u0440\u044b\u0442\u044c \u0434\u043e\u0447\u0435\u0440\u043d\u0435\u0435 \u043c\u0435\u043d\u044e<\/span>","collapse":"<span class=\"screen-reader-text\">\u0441\u0432\u0435\u0440\u043d\u0443\u0442\u044c \u0434\u043e\u0447\u0435\u0440\u043d\u0435\u0435 \u043c\u0435\u043d\u044e<\/span>"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/themes/twentyfifteen/js/functions.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/plugins/enlighter/resources/enlighterjs/enlighterjs.min.js"></script>
+<script type="text/javascript">
+!function(n,o){"undefined"!=typeof EnlighterJS?(n.EnlighterJSINIT=function(){EnlighterJS.init("pre.EnlighterJSRAW", "code.EnlighterJSRAW", {"indent":4,"ampersandCleanup":true,"linehover":true,"rawcodeDbclick":false,"textOverflow":"break","linenumbers":true,"theme":"enlighter","retainCssClasses":false})})():(o&&(o.error||o.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}(window,console);
+</script>
+
+</body>
+</html>
