@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru-RU" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	
+	
+	
+	<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
+<title>Настройка Jenkins для сборки iOS-проекта — Заметки программера</title>
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//s.w.org">
+<link href="https://fonts.gstatic.com" crossorigin rel="preconnect">
+
+
+
+<link rel="stylesheet" id="twentyfifteen-fonts-css" href="https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700&subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext" type="text/css" media="all">
+<link rel="stylesheet" id="genericons-css" href="https://imposibrus.github.io/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyfifteen-style-css" href="https://imposibrus.github.io/wp-content/themes/twentyfourteen-child/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="twentyfifteen-block-style-css" href="https://imposibrus.github.io/wp-content/themes/twentyfifteen/css/blocks.css" type="text/css" media="all">
+
+
+<link rel="stylesheet" id="enlighterjs-css" href="https://imposibrus.github.io/wp-content/plugins/enlighter/cache/enlighterjs.min.css" type="text/css" media="all">
+<script type="text/javascript" src="https://imposibrus.github.io/wp-includes/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-includes/js/jquery/jquery-migrate.min.js"></script>
+
+
+
+
+
+
+
+
+		<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+		<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f5f5f5; }
+</style>
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Настройка Jenkins для сборки iOS-проекта">
+<meta property="og:url" content="https://imposibrus.github.io/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-jenkins-%d0%b4%d0%bb%d1%8f-%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b8-ios-%d0%bf%d1%80%d0%be%d0%b5%d0%ba%d1%82%d0%b0/">
+<meta property="og:description" content="Статья основана на Continuous integration mixing Jenkins, iOS 9 and XCode 7, Автоматическая сборка iOS-приложений на разных версиях Xcode с помощью Jenkins и Continuous Integration для мобильных и …">
+<meta property="article:published_time" content="2017-09-12T07:42:36+00:00">
+<meta property="article:modified_time" content="2017-09-12T07:45:16+00:00">
+<meta property="og:site_name" content="Заметки программера">
+<meta property="og:image" content="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-21.png">
+<meta property="og:image:width" content="796">
+<meta property="og:image:height" content="508">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:text:title" content="Настройка Jenkins для сборки iOS-проекта">
+<meta name="twitter:card" content="summary">
+
+
+</head>
+
+<body class="post-template-default single single-post postid-195 single-format-standard custom-background">
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Перейти к содержимому</a>
+
+	<div id="sidebar" class="sidebar">
+		<header id="masthead" class="site-header" role="banner">
+			<div class="site-branding">
+										<p class="site-title"><a href="https://imposibrus.github.io/" rel="home">Заметки программера</a></p>
+												<p class="site-description">Решения нестандартных задач</p>
+										<button class="secondary-toggle">Меню и виджеты</button>
+			</div>
+		</header>
+
+			<div id="secondary" class="secondary">
+
+		
+		
+					<div id="widget-area" class="widget-area" role="complementary">
+				<aside id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://imposibrus.github.io/">
+				<label>
+					<span class="screen-reader-text">Найти:</span>
+					<input type="search" class="search-field" placeholder="Поиск…" value="" name="s">
+				</label>
+				<input type="submit" class="search-submit screen-reader-text" value="Поиск">
+			</form></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">Свежие записи</h2>		<ul>
+											<li>
+					<a href="https://imposibrus.github.io/%d0%b8%d0%bd%d0%be%d0%b3%d0%b4%d0%b0-docker-%d0%ba%d0%be%d0%bd%d1%82%d0%b5%d0%b9%d0%bd%d0%b5%d1%80%d1%8b-%d0%bf%d0%b5%d1%80%d0%b5%d1%81%d1%82%d0%b0%d1%8e%d1%82-%d0%b1%d1%8b%d1%82%d1%8c/">Иногда Docker-контейнеры перестают быть доступны по сети</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-jenkins-%d0%b4%d0%bb%d1%8f-%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b8-ios-%d0%bf%d1%80%d0%be%d0%b5%d0%ba%d1%82%d0%b0/">Настройка Jenkins для сборки iOS-проекта</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/%d0%b8%d1%81%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d0%be%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5-%d1%80%d0%b0%d0%b7%d0%bd%d1%8b%d1%85-%d0%bf%d1%83%d0%bb%d0%be%d0%b2-php-fpm-%d0%b2-apache-2-%d1%81-mod_fastcgi/">Использование разных пулов PHP-FPM в Apache 2 с mod_fastcgi</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/%d1%80%d0%b0%d0%b7%d0%b4%d0%b5%d0%bb%d0%b5%d0%bd%d0%b8%d0%b5-%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d0%be%d0%b2%d0%b0%d1%82%d0%b5%d0%bb%d0%b5%d0%b9-%d1%81-supervisor-apache-%d0%b8-nginx/">Защищено: Разделение пользователей с Supervisor, Apache и NGINX</a>
+									</li>
+											<li>
+					<a href="https://imposibrus.github.io/%d0%b0%d0%b2%d1%82%d0%be%d0%bc%d0%b0%d1%82%d0%b8%d1%87%d0%b5%d1%81%d0%ba%d0%be%d0%b5-%d0%bf%d0%b5%d1%80%d0%b5%d0%ba%d0%bb%d1%8e%d1%87%d0%b5%d0%bd%d0%b8%d0%b5-%d0%b2%d0%b5%d1%80%d1%81%d0%b8%d0%b8-node/">Автоматическое переключение версии Node.js с помощью NVM и файла .nvmrc для Fish shell</a>
+									</li>
+					</ul>
+		</aside><aside id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">Свежие комментарии</h2><ul id="recentcomments"></ul></aside><aside id="archives-2" class="widget widget_archive"><h2 class="widget-title">Архивы</h2>		<ul>
+			<li><a href="https://imposibrus.github.io/2018/01/">Январь 2018</a></li>
+	<li><a href="https://imposibrus.github.io/2017/09/">Сентябрь 2017</a></li>
+	<li><a href="https://imposibrus.github.io/2016/07/">Июль 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/06/">Июнь 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/05/">Май 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/04/">Апрель 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2016/03/">Март 2016</a></li>
+	<li><a href="https://imposibrus.github.io/2014/02/">Февраль 2014</a></li>
+		</ul>
+		</aside><aside id="categories-2" class="widget widget_categories"><h2 class="widget-title">Рубрики</h2>		<ul>
+	<li class="cat-item cat-item-14"><a href="https://imposibrus.github.io/category/apache/">Apache</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://imposibrus.github.io/category/centos/">CentOS</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="https://imposibrus.github.io/category/docker/">Docker</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="https://imposibrus.github.io/category/node-js/">Node.js</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="https://imposibrus.github.io/category/php/">PHP</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://imposibrus.github.io/category/php-fpm/">PHP-FPM</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://imposibrus.github.io/category/redis/">Redis</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="https://imposibrus.github.io/category/socket-io/">socket.io</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://imposibrus.github.io/category/supervisor/">Supervisor</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="https://imposibrus.github.io/category/ubuntu/">Ubuntu</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://imposibrus.github.io/category/%d0%b1%d0%b5%d0%b7-%d1%80%d1%83%d0%b1%d1%80%d0%b8%d0%ba%d0%b8/">Без рубрики</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="https://imposibrus.github.io/category/%d0%bc%d0%be%d0%bd%d0%b8%d1%82%d0%be%d1%80%d0%b8%d0%bd%d0%b3-%d0%bf%d1%80%d0%be%d1%86%d0%b5%d1%81%d1%81%d0%be%d0%b2/">Мониторинг процессов</a>
+</li>
+		</ul>
+</aside><aside id="meta-2" class="widget widget_meta"><h2 class="widget-title">Мета</h2>			<ul>
+						<li><a href="https://imposibrus.github.io/wp-login.php">Войти</a></li>
+			<li><a href="https://imposibrus.github.io/feed/"><abbr title="Really Simple Syndication">RSS</abbr> записей</a></li>
+			<li><a href="https://imposibrus.github.io/comments/feed/"><abbr title="Really Simple Syndication">RSS</abbr> комментариев</a></li>
+			<li><a href="https://ru.wordpress.org/" title="Сайт работает на WordPress — современной персональной платформе для публикаций.">WordPress.org</a></li>			</ul>
+			</aside>			</div>
+		
+	</div>
+
+	</div>
+
+	<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+<article id="post-195" class="post-195 post type-post status-publish format-standard hentry category-1">
+	
+	<header class="entry-header">
+		<h1 class="entry-title">Настройка Jenkins для сборки iOS-проекта</h1>	</header>
+
+	<div class="entry-content">
+		<p>Статья основана на <a href="http://mmorejon.github.io/en/blog/continuous-integration-jenkins-ios9-xcode/">Continuous integration mixing Jenkins, iOS 9 and XCode 7</a>, <a href="https://habrahabr.ru/company/eastbanctech/blog/192784/">Автоматическая сборка iOS-приложений на разных версиях Xcode с помощью Jenkins</a> и <a href="https://habrahabr.ru/post/175203/">Continuous Integration для мобильных и веб-проектов</a>.</p>
+<p>Руководство подразумевает, что Jenkins уже установлен и у вас есть компьютер с OS X на котором установлен XCode, Java и Git.</p>
+<p><span id="more-195"></span></p>
+<ul>
+<li>Включите встроенный SSH-сервер на компьютере с OS X. Для этого перейдите в System settings -> Sharing и поставьте галочку «Remote login»<br>
+<a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screen-Shot-2016-05-22-at-23.58.36.png"><img class="alignnone size-full wp-image-204" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screen-Shot-2016-05-22-at-23.58.36.png" alt="Screen Shot 2016-05-22 at 23.58.36" width="654" height="446" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screen-Shot-2016-05-22-at-23.58.36.png 654w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screen-Shot-2016-05-22-at-23.58.36-300x205.png 300w" sizes="(max-width: 654px) 100vw, 654px"></a></li>
+<li>Устанавливаем плагины Jenkins: «Credentials Plugin» версии <strong>1.28</strong> (<strong>это важно!</strong>), «Xcode integration», «JUnit Plugin», «Git plugin», «SSH Slaves plugin».<br>
+На момент написания статьи, между плагинами «Credentials Plugin» версии 2.0 и «SSH Slaves plugin» версии 1.11 есть баг при котором нельзя добавлять агентов Jenkins. Поэтому нужно устанавливать «Credentials Plugin» версии именно <strong>1.28</strong>.
+<blockquote><p>Чтобы установить плагин определенной версии, надо пойти на его страницу в Wiki Jenkins, кликнуть на «archive» и найти там ссылку на нужную версию. Скаченный .hpi файл нужно скопировать в папку `%{jenkins_home}/plugins/` и перезапустить Jenkins.</p></blockquote>
+</li>
+<li>Перезапускаем Jenkins</li>
+<li>Идем в настройки Jenkins -> «Manage Credentials» и добавляем туда SSH-ключ по которому Jenkins будет подключаться к компьютеру с OS X и XCode. Если ключа еще нет, то сгенерируйте его (на сервере Jenkins):<br>
+<pre class="EnlighterJSRAW" data-enlighter-language="sh" data-enlighter-title="">ssh-keygen -t rsa -b 4096 -C "your_email@example.com"</pre>
+</li>
+<li>Добавляем публичный ключ в `~/.ssh/authorized_keys` на компьютере с OS X.</li>
+<li>С помощью этого ключа подключитесь с сервера Jenkins на OS X вручную и проверьте, что все работает (пароль не спрашивается, нет ошибок и т.д.).</li>
+<li>Создаем рабочую папку Jenkins на компьютере с OS X, например, у меня это `/Users/imposibrus/sandbox/jenkins-home`</li>
+<li>Идем в Настройки Jenkins -> Управление средами сборки -> Новый узел, вводим название узла и указываем, что это «Permanent (Dumb) Agent», нажимаем ОК<br>
+<a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-03.png"><img class="alignnone size-full wp-image-196" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-03.png" alt="Screenshot from 2016-05-22 23-24-03" width="739" height="294" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-03.png 739w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-03-300x119.png 300w" sizes="(max-width: 739px) 100vw, 739px"></a></li>
+<li>На следующей странице вводим описание (по желанию), указываем путь к рабочей директории Jenkins на компьютере с OS X, которую мы создали ранее. Указываем как минимум одну метку «xcode» (можно несколько, через пробел), мы будем использовать ее позже. В пункте «Использование» выбираем «Only build jobs with label expressions matching this node» («Только для связанных проектов»). В «Способ запуска» выбираем «Launch slave agents on Unix machines via SSH», в Host пишем IP-адрес или домен компьютера с OS X, в Credentials выбираем созданный ранее ключ.<br>
+<a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-26.png"><img class="alignnone size-full wp-image-197" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-26.png" alt="Screenshot from 2016-05-22 23-24-26" width="748" height="515" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-26.png 748w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-24-26-300x207.png 300w" sizes="(max-width: 748px) 100vw, 748px"></a></li>
+<li>Сохраняем. После этого SSH Slaves plugin попробует подключиться к OS X и закачать на него .jar-файл агента (slave.jar). Если что-то пошло не так — смотрите в логи. Например, SSH Slaves plugin не умеет работать с Fish Shell, поэтому надо ставить Bash по-умолчанию.</li>
+<li>Создаем в Jenkins новый проект свободной конфигурации, назовем его «time-table»</li>
+<li>В настройка проекта ставим галочку «Ограничить количество узлов, которые могут собирать этот проект» и в поле «Label Expression» пишем метку «xcode» (мы указали ее при создании агента). Это нужно для того, что бы сборка этого проекта производилась только на компьютерах с OS X и XCode, а не запускалось на сервере с Jenkins или других агентах.<br>
+<a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-53-59.png"><img class="alignnone size-full wp-image-198" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-53-59.png" alt="Screenshot from 2016-05-22 23-53-59" width="816" height="543" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-53-59.png 816w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-53-59-300x200.png 300w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-53-59-768x511.png 768w" sizes="(max-width: 816px) 100vw, 816px"></a><br>
+В пункте «Управление исходным кодом» ставим галочку напротив Git и указываем адрес репозитория «https://github.com/imposibrus/time-table.git». Это тестовый проект с одним экраном и парочкой тестов.<br>
+<a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-21.png"><img class="alignnone size-full wp-image-199" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-21.png" alt="Screenshot from 2016-05-22 23-54-21" width="796" height="508" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-21.png 796w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-21-300x191.png 300w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-21-768x490.png 768w" sizes="(max-width: 796px) 100vw, 796px"></a></li>
+<li>Добавляем шаг сборки «XCode» и в настройках «General build settings» меняем «Configuration» на «Debug». В «Advanced Xcode build options» ставим «Xcode Schema File» равным «TimeTable», а в «Custom xcodebuild arguments» вводим `test -destination ‘platform=iOS Simulator,name=iPhone 5,OS=9.1’`. Проверьте какую версию iOS поддерживает ваш XCode и замените 9.1 на поддерживаемую, если потребуется.<br>
+<a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-41.png"><img class="alignnone size-full wp-image-200" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-41.png" alt="Screenshot from 2016-05-22 23-54-41" width="809" height="584" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-41.png 809w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-41-300x217.png 300w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-54-41-768x554.png 768w" sizes="(max-width: 809px) 100vw, 809px"></a> <a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-01.png"><img class="alignnone size-full wp-image-201" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-01.png" alt="Screenshot from 2016-05-22 23-55-01" width="740" height="403" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-01.png 740w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-01-300x163.png 300w" sizes="(max-width: 740px) 100vw, 740px"></a></li>
+<li>Добавляем шаг сборки «Publish JUnit test result report», в «XML файлы с отчетами о тестировании» вводим «test-reports/*.xml».<br>
+<a href="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-13.png"><img class="alignnone size-full wp-image-202" src="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-13.png" alt="Screenshot from 2016-05-22 23-55-13" width="773" height="397" srcset="https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-13.png 773w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-13-300x154.png 300w,https://imposibrus.github.io/wp-content/uploads/2016/05/Screenshot-from-2016-05-22-23-55-13-768x394.png 768w" sizes="(max-width: 773px) 100vw, 773px"></a></li>
+<li>Сохраняем и запускаем сборку. В результате Jenkins должен подключиться к OS X, выполнить сборку, прогнать тесты (запустится эмулятор) и сгенерировать отчет о пройденных тестах.</li>
+</ul>
+	</div>
+
+	
+	<footer class="entry-footer">
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-jenkins-%d0%b4%d0%bb%d1%8f-%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b8-ios-%d0%bf%d1%80%d0%be%d0%b5%d0%ba%d1%82%d0%b0/" rel="bookmark"><time class="entry-date published" datetime="2017-09-12T11:42:36+00:00">12.09.2017</time><time class="updated" datetime="2017-09-12T11:45:16+00:00">12.09.2017</time></a></span><span class="byline"><span class="author vcard"><span class="screen-reader-text">Автор </span><a class="url fn n" href="https://imposibrus.github.io/author/imposibrus/">imposibrus</a></span></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/%d0%b1%d0%b5%d0%b7-%d1%80%d1%83%d0%b1%d1%80%d0%b8%d0%ba%d0%b8/" rel="category tag">Без рубрики</a></span>			</footer>
+
+</article>
+
+<div id="disqus_thread"></div>
+
+	<nav class="navigation post-navigation" role="navigation">
+		<h2 class="screen-reader-text">Навигация по записям</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://imposibrus.github.io/%d0%b8%d1%81%d0%bf%d0%be%d0%bb%d1%8c%d0%b7%d0%be%d0%b2%d0%b0%d0%bd%d0%b8%d0%b5-%d1%80%d0%b0%d0%b7%d0%bd%d1%8b%d1%85-%d0%bf%d1%83%d0%bb%d0%be%d0%b2-php-fpm-%d0%b2-apache-2-%d1%81-mod_fastcgi/" rel="prev"><span class="meta-nav" aria-hidden="true">Назад</span> <span class="screen-reader-text">Предыдущая запись:</span> <span class="post-title">Использование разных пулов PHP-FPM в Apache 2 с mod_fastcgi</span></a></div><div class="nav-next"><a href="https://imposibrus.github.io/%d0%b8%d0%bd%d0%be%d0%b3%d0%b4%d0%b0-docker-%d0%ba%d0%be%d0%bd%d1%82%d0%b5%d0%b9%d0%bd%d0%b5%d1%80%d1%8b-%d0%bf%d0%b5%d1%80%d0%b5%d1%81%d1%82%d0%b0%d1%8e%d1%82-%d0%b1%d1%8b%d1%82%d1%8c/" rel="next"><span class="meta-nav" aria-hidden="true">Далее</span> <span class="screen-reader-text">Следующая запись:</span> <span class="post-title">Иногда Docker-контейнеры перестают быть доступны по сети</span></a></div></div>
+	</nav>
+		</main>
+	</div>
+
+
+	</div>
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+									<a href="https://ru.wordpress.org/" class="imprint">
+				Сайт работает на WordPress			</a>
+		</div>
+	</footer>
+
+</div>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+var countVars = {"disqusShortname":"imposibrus"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/plugins/disqus-comment-system/public/js/comment_count.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var embedVars = {"disqusConfig":{"integration":"wordpress 3.0.17"},"disqusIdentifier":"195 https:\/\/imposibrus.github.io\/?p=195","disqusShortname":"imposibrus","disqusTitle":"\u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0430 Jenkins \u0434\u043b\u044f \u0441\u0431\u043e\u0440\u043a\u0438 iOS-\u043f\u0440\u043e\u0435\u043a\u0442\u0430","disqusUrl":"https:\/\/imposibrus.github.io\/%d0%bd%d0%b0%d1%81%d1%82%d1%80%d0%be%d0%b9%d0%ba%d0%b0-jenkins-%d0%b4%d0%bb%d1%8f-%d1%81%d0%b1%d0%be%d1%80%d0%ba%d0%b8-ios-%d0%bf%d1%80%d0%be%d0%b5%d0%ba%d1%82%d0%b0\/","postId":"195"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/plugins/disqus-comment-system/public/js/comment_embed.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/themes/twentyfourteen-child/main.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/themes/twentyfifteen/js/skip-link-focus-fix.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var screenReaderText = {"expand":"<span class=\"screen-reader-text\">\u0440\u0430\u0441\u043a\u0440\u044b\u0442\u044c \u0434\u043e\u0447\u0435\u0440\u043d\u0435\u0435 \u043c\u0435\u043d\u044e<\/span>","collapse":"<span class=\"screen-reader-text\">\u0441\u0432\u0435\u0440\u043d\u0443\u0442\u044c \u0434\u043e\u0447\u0435\u0440\u043d\u0435\u0435 \u043c\u0435\u043d\u044e<\/span>"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/themes/twentyfifteen/js/functions.js"></script>
+<script type="text/javascript" src="https://imposibrus.github.io/wp-content/plugins/enlighter/resources/enlighterjs/enlighterjs.min.js"></script>
+<script type="text/javascript">
+!function(n,o){"undefined"!=typeof EnlighterJS?(n.EnlighterJSINIT=function(){EnlighterJS.init("pre.EnlighterJSRAW", "code.EnlighterJSRAW", {"indent":4,"ampersandCleanup":true,"linehover":true,"rawcodeDbclick":false,"textOverflow":"break","linenumbers":true,"theme":"enlighter","retainCssClasses":false})})():(o&&(o.error||o.log)||function(){})("Error: EnlighterJS resources not loaded yet!")}(window,console);
+</script>
+
+</body>
+</html>
