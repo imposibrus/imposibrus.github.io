@@ -13,6 +13,8 @@
 <link href="https://fonts.gstatic.com" crossorigin rel="preconnect">
 
 
+<link rel="stylesheet" id="wp-block-library-css" href="https://imposibrus.github.io/wp-includes/css/dist/block-library/style.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-block-library-theme-css" href="https://imposibrus.github.io/wp-includes/css/dist/block-library/theme.min.css" type="text/css" media="all">
 <link rel="stylesheet" id="twentyfifteen-fonts-css" href="https://fonts.googleapis.com/css?family=Noto+Sans%3A400italic%2C700italic%2C400%2C700%7CNoto+Serif%3A400italic%2C700italic%2C400%2C700&subset=latin%2Clatin-ext%2Ccyrillic%2Ccyrillic-ext" type="text/css" media="all">
 <link rel="stylesheet" id="genericons-css" href="https://imposibrus.github.io/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css" type="text/css" media="all">
 <link rel="stylesheet" id="twentyfifteen-style-css" href="https://imposibrus.github.io/wp-content/themes/twentyfourteen-child/style.css" type="text/css" media="all">
@@ -28,7 +30,7 @@
 		<style type="text/css" id="custom-background-css">
 body.custom-background { background-color: #f5f5f5; }
 </style>
-
+	
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Заметки программера">
@@ -41,7 +43,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 </head>
 
-<body class="home blog custom-background">
+<body class="home blog custom-background wp-embed-responsive">
 <div id="page" class="hfeed site">
 	<a class="skip-link screen-reader-text" href="#content">Перейти к содержимому</a>
 
@@ -67,6 +69,9 @@ body.custom-background { background-color: #f5f5f5; }
 				<input type="submit" class="search-submit screen-reader-text" value="Поиск">
 			</form></aside>		<aside id="recent-posts-2" class="widget widget_recent_entries">		<h2 class="widget-title">Свежие записи</h2>		<ul>
 											<li>
+					<a href="https://imposibrus.github.io/really-helpful-chrome-extensions/">Расширения Chrome, которые реально помогают</a>
+									</li>
+											<li>
 					<a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/">Иногда Docker-контейнеры перестают быть доступны по сети</a>
 									</li>
 											<li>
@@ -78,12 +83,10 @@ body.custom-background { background-color: #f5f5f5; }
 											<li>
 					<a href="https://imposibrus.github.io/supervisor-apache-and-nginx-users-separating/">Защищено: Разделение пользователей с Supervisor, Apache и NGINX</a>
 									</li>
-											<li>
-					<a href="https://imposibrus.github.io/nvm-auto-switching/">Автоматическое переключение версии Node.js с помощью NVM и файла .nvmrc для Fish shell</a>
-									</li>
 					</ul>
 		</aside><aside id="recent-comments-2" class="widget widget_recent_comments"><h2 class="widget-title">Свежие комментарии</h2><ul id="recentcomments"></ul></aside><aside id="archives-2" class="widget widget_archive"><h2 class="widget-title">Архивы</h2>		<ul>
-			<li><a href="https://imposibrus.github.io/2018/01/">Январь 2018</a></li>
+				<li><a href="https://imposibrus.github.io/2019/08/">Август 2019</a></li>
+	<li><a href="https://imposibrus.github.io/2018/01/">Январь 2018</a></li>
 	<li><a href="https://imposibrus.github.io/2017/09/">Сентябрь 2017</a></li>
 	<li><a href="https://imposibrus.github.io/2016/07/">Июль 2016</a></li>
 	<li><a href="https://imposibrus.github.io/2016/06/">Июнь 2016</a></li>
@@ -92,10 +95,12 @@ body.custom-background { background-color: #f5f5f5; }
 	<li><a href="https://imposibrus.github.io/2016/03/">Март 2016</a></li>
 	<li><a href="https://imposibrus.github.io/2014/02/">Февраль 2014</a></li>
 		</ul>
-		</aside><aside id="categories-2" class="widget widget_categories"><h2 class="widget-title">Рубрики</h2>		<ul>
-	<li class="cat-item cat-item-14"><a href="https://imposibrus.github.io/category/apache/">Apache</a>
+			</aside><aside id="categories-2" class="widget widget_categories"><h2 class="widget-title">Рубрики</h2>		<ul>
+				<li class="cat-item cat-item-14"><a href="https://imposibrus.github.io/category/apache/">Apache</a>
 </li>
 	<li class="cat-item cat-item-6"><a href="https://imposibrus.github.io/category/centos/">CentOS</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="https://imposibrus.github.io/category/chrome/">Chrome</a>
 </li>
 	<li class="cat-item cat-item-16"><a href="https://imposibrus.github.io/category/docker/">Docker</a>
 </li>
@@ -118,7 +123,7 @@ body.custom-background { background-color: #f5f5f5; }
 	<li class="cat-item cat-item-1"><a href="https://imposibrus.github.io/category/untitled/">Untitled</a>
 </li>
 		</ul>
-</aside><aside id="meta-2" class="widget widget_meta"><h2 class="widget-title">Мета</h2>			<ul>
+			</aside><aside id="meta-2" class="widget widget_meta"><h2 class="widget-title">Мета</h2>			<ul>
 						<li><a href="https://imposibrus.github.io/wp-login.php">Войти</a></li>
 			<li><a href="https://imposibrus.github.io/feed/"><abbr title="Really Simple Syndication">RSS</abbr> записей</a></li>
 			<li><a href="https://imposibrus.github.io/comments/feed/"><abbr title="Really Simple Syndication">RSS</abbr> комментариев</a></li>
@@ -137,24 +142,49 @@ body.custom-background { background-color: #f5f5f5; }
 		
 			
 			
+<article id="post-339" class="post-339 post type-post status-publish format-standard hentry category-chrome tag-chrome tag-extensions tag-webdev">
+	
+	<header class="entry-header">
+		<h2 class="entry-title"><a href="https://imposibrus.github.io/really-helpful-chrome-extensions/" rel="bookmark">Расширения Chrome, которые реально помогают</a></h2>	</header>
+
+	<div class="entry-content">
+		
+<p>Хочу поделиться набором расширений Chrome, которые экономят мое время и облегчают жизнь.</p>
+
+
+
+ <a href="https://imposibrus.github.io/really-helpful-chrome-extensions/#more-339" class="more-link">Читать далее <span class="screen-reader-text">Расширения Chrome, которые реально помогают</span></a>	</div>
+
+	
+	<footer class="entry-footer">
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/really-helpful-chrome-extensions/" rel="bookmark"><time class="entry-date published" datetime="2019-08-08T23:23:30+04:00">08.08.2019</time><time class="updated" datetime="2019-08-08T23:25:39+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/chrome/" rel="category tag">Chrome</a></span><span class="tags-links"><span class="screen-reader-text">Метки </span><a href="https://imposibrus.github.io/tag/chrome/" rel="tag">chrome</a>, <a href="https://imposibrus.github.io/tag/extensions/" rel="tag">extensions</a>, <a href="https://imposibrus.github.io/tag/webdev/" rel="tag">webdev</a></span><span class="comments-link"><a href="https://imposibrus.github.io/really-helpful-chrome-extensions/#respond"><span class="dsq-postid" data-dsqidentifier="339 https://imposibrus.github.io/?p=339">Добавить комментарий<span class="screen-reader-text"> к записи Расширения Chrome, которые реально помогают</span></span></a></span>			</footer>
+
+</article>
+
 <article id="post-314" class="post-314 post type-post status-publish format-standard hentry category-docker">
 	
 	<header class="entry-header">
 		<h2 class="entry-title"><a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/" rel="bookmark">Иногда Docker-контейнеры перестают быть доступны по сети</a></h2>	</header>
 
 	<div class="entry-content">
-		<p>Симптомы такие:</p>
-<ul>
-<li>Не пингуются;</li>
-<li>При попытке curl’а он подвисает.</li>
-</ul>
-<p><a href="https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1.png"><img class="size-full wp-image-316 alignnone" src="https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1.png" alt="" width="449" height="105" srcset="https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1.png 449w,https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1-300x70.png 300w" sizes="(max-width: 449px) 100vw, 449px"></a></p>
-<p> <a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/#more-314" class="more-link">Читать далее <span class="screen-reader-text">Иногда Docker-контейнеры перестают быть доступны по сети</span></a></p>
-	</div>
+		
+<p>Симптомы такие:</p>
+
+
+
+<ul><li>Не пингуются;</li><li>При попытке curl’а он подвисает.</li></ul>
+
+
+
+<figure class="wp-block-image"><a href="https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1.png"><img src="https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1.png" alt="" class="wp-image-316" srcset="https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1.png 449w,https://imposibrus.github.io/wp-content/uploads/2018/01/docker-1-300x70.png 300w" sizes="(max-width: 449px) 100vw, 449px"></a></figure>
+
+
+
+ <a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/#more-314" class="more-link">Читать далее <span class="screen-reader-text">Иногда Docker-контейнеры перестают быть доступны по сети</span></a>	</div>
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/" rel="bookmark"><time class="entry-date published" datetime="2018-01-04T17:07:08+00:00">04.01.2018</time><time class="updated" datetime="2019-08-08T00:32:51+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/docker/" rel="category tag">Docker</a></span><span class="comments-link"><a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/#respond"><span class="dsq-postid" data-dsqidentifier="314 https://imposibrus.github.io/?p=314">Добавить комментарий<span class="screen-reader-text"> к записи Иногда Docker-контейнеры перестают быть доступны по сети</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/" rel="bookmark"><time class="entry-date published" datetime="2018-01-04T17:07:08+04:00">04.01.2018</time><time class="updated" datetime="2019-08-08T21:32:55+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/docker/" rel="category tag">Docker</a></span><span class="comments-link"><a href="https://imposibrus.github.io/docker-containers-are-inaccessible-sometimes/#respond"><span class="dsq-postid" data-dsqidentifier="314 https://imposibrus.github.io/?p=314">Добавить комментарий<span class="screen-reader-text"> к записи Иногда Docker-контейнеры перестают быть доступны по сети</span></span></a></span>			</footer>
 
 </article>
 
@@ -171,7 +201,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/jenkins-for-ios-building/" rel="bookmark"><time class="entry-date published" datetime="2017-09-12T11:42:36+00:00">12.09.2017</time><time class="updated" datetime="2019-08-08T00:33:25+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/jenkins-for-ios-building/#respond"><span class="dsq-postid" data-dsqidentifier="195 https://imposibrus.github.io/?p=195">Добавить комментарий<span class="screen-reader-text"> к записи Настройка Jenkins для сборки iOS-проекта</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/jenkins-for-ios-building/" rel="bookmark"><time class="entry-date published" datetime="2017-09-12T11:42:36+04:00">12.09.2017</time><time class="updated" datetime="2019-08-08T00:33:25+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/jenkins-for-ios-building/#respond"><span class="dsq-postid" data-dsqidentifier="195 https://imposibrus.github.io/?p=195">Добавить комментарий<span class="screen-reader-text"> к записи Настройка Jenkins для сборки iOS-проекта</span></span></a></span>			</footer>
 
 </article>
 
@@ -187,7 +217,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/using-separate-php-fpm-pools-with-apache-2-with-mod_fastcgi/" rel="bookmark"><time class="entry-date published" datetime="2016-07-26T17:44:48+00:00">26.07.2016</time><time class="updated" datetime="2019-08-08T00:34:41+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/apache/" rel="category tag">Apache</a>, <a href="https://imposibrus.github.io/category/php-fpm/" rel="category tag">PHP-FPM</a>, <a href="https://imposibrus.github.io/category/ubuntu/" rel="category tag">Ubuntu</a></span><span class="comments-link"><a href="https://imposibrus.github.io/using-separate-php-fpm-pools-with-apache-2-with-mod_fastcgi/#respond"><span class="dsq-postid" data-dsqidentifier="233 https://imposibrus.github.io/?p=233">Добавить комментарий<span class="screen-reader-text"> к записи Использование разных пулов PHP-FPM в Apache 2 с mod_fastcgi</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/using-separate-php-fpm-pools-with-apache-2-with-mod_fastcgi/" rel="bookmark"><time class="entry-date published" datetime="2016-07-26T17:44:48+04:00">26.07.2016</time><time class="updated" datetime="2019-08-08T00:34:41+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/apache/" rel="category tag">Apache</a>, <a href="https://imposibrus.github.io/category/php-fpm/" rel="category tag">PHP-FPM</a>, <a href="https://imposibrus.github.io/category/ubuntu/" rel="category tag">Ubuntu</a></span><span class="comments-link"><a href="https://imposibrus.github.io/using-separate-php-fpm-pools-with-apache-2-with-mod_fastcgi/#respond"><span class="dsq-postid" data-dsqidentifier="233 https://imposibrus.github.io/?p=233">Добавить комментарий<span class="screen-reader-text"> к записи Использование разных пулов PHP-FPM в Apache 2 с mod_fastcgi</span></span></a></span>			</footer>
 
 </article>
 
@@ -205,7 +235,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/supervisor-apache-and-nginx-users-separating/" rel="bookmark"><time class="entry-date published" datetime="2016-07-13T17:42:51+00:00">13.07.2016</time><time class="updated" datetime="2019-08-08T00:44:51+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/supervisor-apache-and-nginx-users-separating/" rel="bookmark"><time class="entry-date published" datetime="2016-07-13T17:42:51+04:00">13.07.2016</time><time class="updated" datetime="2019-08-08T00:44:51+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span>			</footer>
 
 </article>
 
@@ -220,7 +250,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/nvm-auto-switching/" rel="bookmark"><time class="entry-date published" datetime="2016-07-01T17:41:02+00:00">01.07.2016</time><time class="updated" datetime="2019-08-08T00:35:19+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/nvm-auto-switching/#respond"><span class="dsq-postid" data-dsqidentifier="227 https://imposibrus.github.io/?p=227">Добавить комментарий<span class="screen-reader-text"> к записи Автоматическое переключение версии Node.js с помощью NVM и файла .nvmrc для Fish shell</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/nvm-auto-switching/" rel="bookmark"><time class="entry-date published" datetime="2016-07-01T17:41:02+04:00">01.07.2016</time><time class="updated" datetime="2019-08-08T00:35:19+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/nvm-auto-switching/#respond"><span class="dsq-postid" data-dsqidentifier="227 https://imposibrus.github.io/?p=227">Добавить комментарий<span class="screen-reader-text"> к записи Автоматическое переключение версии Node.js с помощью NVM и файла .nvmrc для Fish shell</span></span></a></span>			</footer>
 
 </article>
 
@@ -235,7 +265,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/how-to-update-bios-on-hp-mini-110-3706er-with-flash-drive/" rel="bookmark"><time class="entry-date published" datetime="2016-07-01T16:25:36+00:00">01.07.2016</time><time class="updated" datetime="2019-08-08T00:36:06+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/how-to-update-bios-on-hp-mini-110-3706er-with-flash-drive/#respond"><span class="dsq-postid" data-dsqidentifier="223 https://imposibrus.github.io/?p=223">Добавить комментарий<span class="screen-reader-text"> к записи Как обновить BIOS на нетбуке HP mini 110-3706er через флешку</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/how-to-update-bios-on-hp-mini-110-3706er-with-flash-drive/" rel="bookmark"><time class="entry-date published" datetime="2016-07-01T16:25:36+04:00">01.07.2016</time><time class="updated" datetime="2019-08-08T00:36:06+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/how-to-update-bios-on-hp-mini-110-3706er-with-flash-drive/#respond"><span class="dsq-postid" data-dsqidentifier="223 https://imposibrus.github.io/?p=223">Добавить комментарий<span class="screen-reader-text"> к записи Как обновить BIOS на нетбуке HP mini 110-3706er через флешку</span></span></a></span>			</footer>
 
 </article>
 
@@ -251,7 +281,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/jenkins-for-building-android/" rel="bookmark"><time class="entry-date published" datetime="2016-06-06T18:00:21+00:00">06.06.2016</time><time class="updated" datetime="2019-08-08T00:36:48+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/jenkins-for-building-android/#respond"><span class="dsq-postid" data-dsqidentifier="178 https://imposibrus.github.io/?p=178">Добавить комментарий<span class="screen-reader-text"> к записи Настройка Jenkins для сборки Android-проекта</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/jenkins-for-building-android/" rel="bookmark"><time class="entry-date published" datetime="2016-06-06T18:00:21+04:00">06.06.2016</time><time class="updated" datetime="2019-08-08T00:36:48+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/jenkins-for-building-android/#respond"><span class="dsq-postid" data-dsqidentifier="178 https://imposibrus.github.io/?p=178">Добавить комментарий<span class="screen-reader-text"> к записи Настройка Jenkins для сборки Android-проекта</span></span></a></span>			</footer>
 
 </article>
 
@@ -269,7 +299,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/cms-top/" rel="bookmark"><time class="entry-date published" datetime="2016-05-26T00:29:02+00:00">26.05.2016</time><time class="updated" datetime="2019-08-08T00:45:28+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/cms-top/" rel="bookmark"><time class="entry-date published" datetime="2016-05-26T00:29:02+04:00">26.05.2016</time><time class="updated" datetime="2019-08-08T00:45:28+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span>			</footer>
 
 </article>
 
@@ -285,27 +315,7 @@ body.custom-background { background-color: #f5f5f5; }
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/powerline-fish-shell-os-x/" rel="bookmark"><time class="entry-date published" datetime="2016-05-13T00:06:53+00:00">13.05.2016</time><time class="updated" datetime="2019-08-08T00:37:25+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/powerline-fish-shell-os-x/#respond"><span class="dsq-postid" data-dsqidentifier="156 https://imposibrus.github.io/?p=156">Добавить комментарий<span class="screen-reader-text"> к записи Установка Powerline + Fish shell в OS X</span></span></a></span>			</footer>
-
-</article>
-
-<article id="post-140" class="post-140 post type-post status-publish format-standard has-post-thumbnail hentry category-node-js category-socket-io">
-	
-	<a class="post-thumbnail" href="https://imposibrus.github.io/socket-io-horizontal-scale/" aria-hidden="true">
-		<img width="812" height="381" src="https://imposibrus.github.io/wp-content/uploads/2016/04/socket-logo.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="Горизонтальное масштабирование Socket.io" srcset="https://imposibrus.github.io/wp-content/uploads/2016/04/socket-logo.png 812w,https://imposibrus.github.io/wp-content/uploads/2016/04/socket-logo-300x141.png 300w,https://imposibrus.github.io/wp-content/uploads/2016/04/socket-logo-768x360.png 768w" sizes="(max-width: 812px) 100vw, 812px">	</a>
-
-		
-	<header class="entry-header">
-		<h2 class="entry-title"><a href="https://imposibrus.github.io/socket-io-horizontal-scale/" rel="bookmark">Горизонтальное масштабирование Socket.io</a></h2>	</header>
-
-	<div class="entry-content">
-		<p>Сразу <a href="https://github.com/imposibrus/socket.io-scaling">код</a>.</p>
-<p>В <code>socket.io</code> >= 1.0 проблема горизонтального масштабирования решается с помощью «адаптеров».  Адаптеры реализуют интерфейс по управлению комнатами, рассылке сообщений всем клиентам и получение списка клиентов. По-умолчанию используется адаптер, хранящий все данные в памяти, а для горизонтального масштабирования нам понадобится хранение данных во внешней системе. Достаточно популярным является <code>socket.io-redis</code>, его и будем использовать. <a href="https://imposibrus.github.io/socket-io-horizontal-scale/#more-140" class="more-link">Читать далее <span class="screen-reader-text">Горизонтальное масштабирование Socket.io</span></a></p>
-	</div>
-
-	
-	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/socket-io-horizontal-scale/" rel="bookmark"><time class="entry-date published" datetime="2016-04-17T20:28:02+00:00">17.04.2016</time><time class="updated" datetime="2019-08-08T00:39:32+00:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/node-js/" rel="category tag">Node.js</a>, <a href="https://imposibrus.github.io/category/socket-io/" rel="category tag">socket.io</a></span><span class="comments-link"><a href="https://imposibrus.github.io/socket-io-horizontal-scale/#respond"><span class="dsq-postid" data-dsqidentifier="140 https://imposibrus.github.io/?p=140">Добавить комментарий<span class="screen-reader-text"> к записи Горизонтальное масштабирование Socket.io</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.github.io/powerline-fish-shell-os-x/" rel="bookmark"><time class="entry-date published" datetime="2016-05-13T00:06:53+04:00">13.05.2016</time><time class="updated" datetime="2019-08-08T00:37:25+04:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.github.io/category/untitled/" rel="category tag">Untitled</a></span><span class="comments-link"><a href="https://imposibrus.github.io/powerline-fish-shell-os-x/#respond"><span class="dsq-postid" data-dsqidentifier="156 https://imposibrus.github.io/?p=156">Добавить комментарий<span class="screen-reader-text"> к записи Установка Powerline + Fish shell в OS X</span></span></a></span>			</footer>
 
 </article>
 
