@@ -7,8 +7,33 @@
 	
 	
 	<script>(function(html){html.className = html.className.replace(/\bno-js\b/,'js')})(document.documentElement);</script>
-<title>Горизонтальное масштабирование Socket.io — Заметки программера</title>
-<meta name="robots" content="max-image-preview:large">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+	
+	<title>Горизонтальное масштабирование Socket.io - Заметки программера</title>
+	
+	<meta property="og:locale" content="ru_RU">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="Горизонтальное масштабирование Socket.io - Заметки программера">
+	<meta property="og:description" content="Сразу код. В socket.io >= 1.0 проблема горизонтального масштабирования решается с помощью «адаптеров».  Адаптеры реализуют интерфейс по управлению комнатами, рассылке сообщений всем клиентам и получение списка клиентов. По-умолчанию используется адаптер, хранящий все данные в памяти, а для горизонтального масштабирования нам понадобится хранение данных во внешней системе. Достаточно популярным является socket.io-redis, его и будем использовать. В … Читать далее Горизонтальное масштабирование Socket.io">
+	<meta property="og:url" content="https://imposibrus.space/socket-io-horizontal-scale/">
+	<meta property="og:site_name" content="Заметки программера">
+	<meta property="article:publisher" content="https://www.facebook.com/imposibrus">
+	<meta property="article:author" content="https://www.facebook.com/imposibrus">
+	<meta property="article:published_time" content="2016-04-17T16:28:02+00:00">
+	<meta property="article:modified_time" content="2019-08-07T20:39:32+00:00">
+	<meta property="og:image" content="https://imposibrus.space/wp-content/uploads/2016/04/socket-logo.png">
+	<meta property="og:image:width" content="812">
+	<meta property="og:image:height" content="381">
+	<meta property="og:image:type" content="image/png">
+	<meta name="author" content="imposibrus">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:creator" content="@imposibrus">
+	<meta name="twitter:site" content="@imposibrus">
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://imposibrus.space/socket-io-horizontal-scale/#article","isPartOf":{"@id":"https://imposibrus.space/socket-io-horizontal-scale/"},"author":{"name":"imposibrus","@id":"https://imposibrus.space/#/schema/person/779811291178847cf81e998213ab472f"},"headline":"Горизонтальное масштабирование Socket.io","datePublished":"2016-04-17T16:28:02+00:00","dateModified":"2019-08-07T20:39:32+00:00","mainEntityOfPage":{"@id":"https://imposibrus.space/socket-io-horizontal-scale/"},"wordCount":376,"commentCount":0,"publisher":{"@id":"https://imposibrus.space/#/schema/person/779811291178847cf81e998213ab472f"},"image":{"@id":"https://imposibrus.space/socket-io-horizontal-scale/#primaryimage"},"thumbnailUrl":"https://imposibrus.space/wp-content/uploads/2016/04/socket-logo.png","articleSection":["Node.js","socket.io"],"inLanguage":"ru-RU","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://imposibrus.space/socket-io-horizontal-scale/#respond"]}]},{"@type":"WebPage","@id":"https://imposibrus.space/socket-io-horizontal-scale/","url":"https://imposibrus.space/socket-io-horizontal-scale/","name":"Горизонтальное масштабирование Socket.io - Заметки программера","isPartOf":{"@id":"https://imposibrus.space/#website"},"primaryImageOfPage":{"@id":"https://imposibrus.space/socket-io-horizontal-scale/#primaryimage"},"image":{"@id":"https://imposibrus.space/socket-io-horizontal-scale/#primaryimage"},"thumbnailUrl":"https://imposibrus.space/wp-content/uploads/2016/04/socket-logo.png","datePublished":"2016-04-17T16:28:02+00:00","dateModified":"2019-08-07T20:39:32+00:00","breadcrumb":{"@id":"https://imposibrus.space/socket-io-horizontal-scale/#breadcrumb"},"inLanguage":"ru-RU","potentialAction":[{"@type":"ReadAction","target":["https://imposibrus.space/socket-io-horizontal-scale/"]}]},{"@type":"ImageObject","inLanguage":"ru-RU","@id":"https://imposibrus.space/socket-io-horizontal-scale/#primaryimage","url":"https://imposibrus.space/wp-content/uploads/2016/04/socket-logo.png","contentUrl":"https://imposibrus.space/wp-content/uploads/2016/04/socket-logo.png","width":812,"height":381},{"@type":"BreadcrumbList","@id":"https://imposibrus.space/socket-io-horizontal-scale/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://imposibrus.space/"},{"@type":"ListItem","position":2,"name":"Горизонтальное масштабирование Socket.io"}]},{"@type":"WebSite","@id":"https://imposibrus.space/#website","url":"https://imposibrus.space/","name":"Заметки программера","description":"Пишу всякое для себя","publisher":{"@id":"https://imposibrus.space/#/schema/person/779811291178847cf81e998213ab472f"},"inLanguage":"ru-RU"},{"@type":["Person","Organization"],"@id":"https://imposibrus.space/#/schema/person/779811291178847cf81e998213ab472f","name":"imposibrus","image":{"@type":"ImageObject","inLanguage":"ru-RU","@id":"https://imposibrus.space/#/schema/person/image/","url":"https://secure.gravatar.com/avatar/6a9a32c6f5751bc7501b378e4b1aedf3?s=96&d=identicon&r=g","contentUrl":"https://secure.gravatar.com/avatar/6a9a32c6f5751bc7501b378e4b1aedf3?s=96&d=identicon&r=g","caption":"imposibrus"},"logo":{"@id":"https://imposibrus.space/#/schema/person/image/"},"sameAs":["https://imposibrus.space/","https://www.facebook.com/imposibrus","https://www.instagram.com/imposibrus","https://www.linkedin.com/in/imposibrus/","https://twitter.com/imposibrus"],"url":"https://imposibrus.space/author/imposibrus/"}]}</script>
+	
+
+
 <link rel="stylesheet" id="wp-block-library-css" href="https://imposibrus.space/wp-includes/css/dist/block-library/style.min.css" media="all">
 <style id="wp-block-library-theme-inline-css">
 .wp-block-audio figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-audio figcaption{color:hsla(0,0%,100%,.65)}.wp-block-audio{margin:0 0 1em}.wp-block-code{border:1px solid #ccc;border-radius:4px;font-family:Menlo,Consolas,monaco,monospace;padding:.8em 1em}.wp-block-embed figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-embed figcaption{color:hsla(0,0%,100%,.65)}.wp-block-embed{margin:0 0 1em}.blocks-gallery-caption{color:#555;font-size:13px;text-align:center}.is-dark-theme .blocks-gallery-caption{color:hsla(0,0%,100%,.65)}.wp-block-image figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-image figcaption{color:hsla(0,0%,100%,.65)}.wp-block-image{margin:0 0 1em}.wp-block-pullquote{border-bottom:4px solid;border-top:4px solid;color:currentColor;margin-bottom:1.75em}.wp-block-pullquote cite,.wp-block-pullquote footer,.wp-block-pullquote__citation{color:currentColor;font-size:.8125em;font-style:normal;text-transform:uppercase}.wp-block-quote{border-left:.25em solid;margin:0 0 1.75em;padding-left:1em}.wp-block-quote cite,.wp-block-quote footer{color:currentColor;font-size:.8125em;font-style:normal;position:relative}.wp-block-quote.has-text-align-right{border-left:none;border-right:.25em solid;padding-left:0;padding-right:1em}.wp-block-quote.has-text-align-center{border:none;padding-left:0}.wp-block-quote.is-large,.wp-block-quote.is-style-large,.wp-block-quote.is-style-plain{border:none}.wp-block-search .wp-block-search__label{font-weight:700}.wp-block-search__button{border:1px solid #ccc;padding:.375em .625em}:where(.wp-block-group.has-background){padding:1.25em 2.375em}.wp-block-separator.has-css-opacity{opacity:.4}.wp-block-separator{border:none;border-bottom:2px solid;margin-left:auto;margin-right:auto}.wp-block-separator.has-alpha-channel-opacity{opacity:1}.wp-block-separator:not(.is-style-wide):not(.is-style-dots){width:100px}.wp-block-separator.has-background:not(.is-style-dots){border-bottom:none;height:1px}.wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots){height:2px}.wp-block-table{margin:0 0 1em}.wp-block-table td,.wp-block-table th{word-break:normal}.wp-block-table figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-table figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video figcaption{color:#555;font-size:13px;text-align:center}.is-dark-theme .wp-block-video figcaption{color:hsla(0,0%,100%,.65)}.wp-block-video{margin:0 0 1em}.wp-block-template-part.has-background{margin-bottom:0;margin-top:0;padding:1.25em 2.375em}
@@ -36,9 +61,6 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 <link rel="stylesheet" id="enlighterjs-css" href="https://imposibrus.space/wp-content/plugins/enlighter/cache/enlighterjs.min.css" media="all">
 <script src="https://imposibrus.space/wp-includes/js/jquery/jquery.min.js" id="jquery-core-js"></script>
 <script src="https://imposibrus.space/wp-includes/js/jquery/jquery-migrate.min.js" id="jquery-migrate-js"></script>
-
-
-
 </head>
 
 <body class="post-template-default single single-post postid-140 single-format-standard wp-embed-responsive">
