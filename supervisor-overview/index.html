@@ -149,30 +149,76 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 		<h1 class="entry-title">Supervisor — система управления процессами</h1>	</header>
 
 	<div class="entry-content">
-		<p>Если на вашем сервере работает несколько разных приложений (например, Node.js-, Ruby- или Python-приложение или PHP-скрипт, который должен быть всегда запущен (daemon)), то Supervisor — то, что вам нужно. Он позволяет управлять процессами из одного файла конфигурации:</p>
+		
+<p>Если на вашем сервере работает несколько разных приложений (например, Node.js-, Ruby- или Python-приложение или PHP-скрипт, который должен быть всегда запущен (daemon)), то Supervisor — то, что вам нужно. Он позволяет управлять процессами из одного файла конфигурации:</p>
+
+
+
 <ul>
 <li>Указывать файлы логов для каждого приложения;</li>
+
+
+
 <li>управлять политиками запуска и перезапуска;</li>
+
+
+
 <li>указывать от какого пользователя запускать приложения и т.д.</li>
 </ul>
+
+
+
 <p>В моем случае есть PHP-скрипт с Websockets-сервером, который должен быть всегда запущен. В начале я запускал его просто через cron, поставив выполнение cron-а на каждый час. Если скрипт падал, то через час он восстанавливался (меньший интервал приводил к багам), это нам не очень подходило. Поэтому я начал искать другие варианты, про Supervisor я слышал уже давно, но в начале он мне показался сложным в настройке, поэтому ушел на дальнюю полку.</p>
-<p>Сегодня я постараюсь рассказать как установить и настроить Supervisor на Ubuntu и CentOS.<span id="more-52"></span></p>
-<h2>Установка</h2>
+
+
+
+<p>Сегодня я постараюсь рассказать как установить и настроить Supervisor на Ubuntu и CentOS.</p>
+
+
+
+<span id="more-52"></span>
+
+
+
+<h2 class="wp-block-heading">Установка</h2>
+
+
+
 <p>Следующие шаги одинаковы для обоих систем. Разница только в пакетном менеджере (у CentOS — <strong>yum</strong>, у Ubuntu — <strong>apt-get</strong>), если у вас CentOS, замените в примере apt-get на yum. Сперва установим Python, а потом с помощью него сам Supervisor и создадим стандартный файл конфигурации.</p>
-<pre class="crayon:false">$ sudo apt-get install python-setuptools
+
+
+
+<pre class="wp-block-preformatted">$ sudo apt-get install python-setuptools
 $ sudo easy_install supervisor
 $ sudo echo_supervisord_conf > /etc/supervisord.conf</pre>
+
+
+
 <p>Если при выполнении последней команды выходит ошибка доступа, то выполните сначала echo_supervisord_conf, скопируйте вывод, создайте файл /etc/supervisord.conf и вставьте вывод туда.</p>
+
+
+
 <p>Сделаем Supervisor сервисом и включим автозапуск:</p>
-<h3>CentOS</h3>
-<pre class="crayon:false">$ curl -L https://github.com/Supervisor/initscripts/raw/master/redhat-init-mingalevme > /tmp/supervisord
+
+
+
+<h3 class="wp-block-heading">CentOS</h3>
+
+
+
+<pre class="wp-block-preformatted">$ curl -L https://github.com/Supervisor/initscripts/raw/master/redhat-init-mingalevme > /tmp/supervisord
 $ sudo mv /tmp/supervisord /etc/init.d/
 $ sudo chmod +x /etc/init.d/supervisord</pre>
-<p>Если нет доступа к интернету или скрипт переехал на другой адрес, то вот его содержимое:<br>
-<span style="line-height: 1.6471;"><div class="spoiler">
-					<div class="title">Содержимое init-скрпита</div>
-					<div class="text">
-<pre class="EnlighterJSRAW" data-enlighter-language="sh" data-enlighter-title="">#!/bin/bash
+
+
+
+<p>Если нет доступа к интернету или скрипт переехал на другой адрес, то вот его содержимое:</p>
+
+
+
+<details>
+    <summary>Содержимое init-скрпита</summary>
+    <pre class="EnlighterJSRAW" data-enlighter-language="sh" data-enlighter-title="">#!/bin/bash
 #
 # supervisord   This scripts turns supervisord on
 #
@@ -322,20 +368,42 @@ case "$1" in
 esac
 
 exit $RETVAL</pre>
-</div>
-				</div>
-<pre class="crayon:false">$ sudo chkconfig --level 345 supervisord on</pre>
+</details>
+
+
+
+<pre class="wp-block-preformatted">$ sudo chkconfig --level 345 supervisord on</pre>
+
+
+
 <p>Теперь можно стартовать Supervisor командой sudo service supervisord start.</p>
-<h3>Ubuntu</h3>
-<pre class="crayon:false">$ curl -L https://github.com/Supervisor/initscripts/raw/master/ubuntu > /tmp/supervisord
+
+
+
+<h3 class="wp-block-heading">Ubuntu</h3>
+
+
+
+<pre class="wp-block-preformatted">$ curl -L https://github.com/Supervisor/initscripts/raw/master/ubuntu > /tmp/supervisord
 $ sudo mv /tmp/supervisord /etc/init.d/
 $ sudo chmod +x /etc/init.d/supervisord</pre>
+
+
+
 <p>Проверьте в какой директории установлен Supervisor командой</p>
-<pre class="crayon:false">$ which supervisord</pre>
+
+
+
+<pre class="wp-block-preformatted">$ which supervisord</pre>
+
+
+
 <p>Если он установлен в /usr/local/bin, то отредактируйте тридцатую строку в /etc/init.d/supervisord (DAEMON=/usr/bin/supervisord), поправьте путь.</p>
-<div class="spoiler">
-					<div class="title">Содержимое файла /etc/init.d/supervisord</div>
-					<div class="text">
+
+
+
+<details>
+    <summary>Содержимое файла /etc/init.d/supervisord</summary>
 <pre class="EnlighterJSRAW" data-enlighter-language="sh" data-enlighter-title="">#! /bin/sh
 #
 # Downloaded from:
@@ -506,19 +574,45 @@ case "$1" in
 esac
 
 exit 0</pre>
-</div>
-				</div>
+</details>
+
+
+
+
 <p>Если вы следовали инструкции и файл конфигурации находится в /etc/supervisord.conf, то отредактируйте файл /etc/init.d/supervisord на 47 строке замените <code>DAEMON_OPTS="-c /etc/supervisor/supervisord.conf $DAEMON_OPTS"</code> на <code>DAEMON_OPTS="-c /etc/supervisord.conf $DAEMON_OPTS"</code></p>
+
+
+
 <p>Выполняем</p>
-<pre class="crayon:false"> $ sudo update-rc.d supervisord defaults</pre>
+
+
+
+<pre class="wp-block-preformatted"> $ sudo update-rc.d supervisord defaults</pre>
+
+
+
 <p>и сервис теперь стартует при запуске системы.</p>
-<h2>Конфигурация</h2>
+
+
+
+<h2 class="wp-block-heading">Конфигурация</h2>
+
+
+
 <p>Открываем файл конфигурации:</p>
-<pre class="crayon:false">$ sudo vi /etc/supervisord.conf</pre>
-<p>Ищем блок [program:theprogramname] — пример конфигурации программы. Воспользуйтесь этим примером для создания своего конфига. Каждая строка там прокомментирована, сложностей, я думаю, не возникнет. Для примера мой блок конфига PHP-скрипта с Websockets:<br>
-</p><div class="spoiler">
-					<div class="title">Спойлер</div>
-					<div class="text">
+
+
+
+<pre class="wp-block-preformatted">$ sudo vi /etc/supervisord.conf</pre>
+
+
+
+<p>Ищем блок [program:theprogramname] — пример конфигурации программы. Воспользуйтесь этим примером для создания своего конфига. Каждая строка там прокомментирована, сложностей, я думаю, не возникнет. Для примера мой блок конфига PHP-скрипта с Websockets:</p>
+
+
+
+<details>
+    <summary>Details</summary>
 <pre class="EnlighterJSRAW" data-enlighter-language="ini" data-enlighter-title="">[program:websocket]
 command=/usr/bin/php server.php
 process_name=websocket
@@ -530,14 +624,13 @@ stdout_logfile=/var/www/logs/websocket_stdout.log
 stdout_logfile_maxbytes=10MB
 stderr_logfile=/var/www/logs/websocket_stderr.log
 stderr_logfile_maxbytes=10MB</pre>
-</div>
-				</div>
-<p>Надеюсь информация была вам полезна.</p>
-	</span></p></div>
+</details>
+
+	</div>
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.space/supervisor-overview/" rel="bookmark"><time class="entry-date published" datetime="2014-02-23T22:22:13+03:00">23.02.2014</time><time class="updated" datetime="2019-08-08T00:40:32+03:00">08.08.2019</time></a></span><span class="byline"><span class="author vcard"><span class="screen-reader-text">Автор </span><a class="url fn n" href="https://imposibrus.space/author/imposibrus/">imposibrus</a></span></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.space/category/centos/" rel="category tag">CentOS</a>, <a href="https://imposibrus.space/category/process-monitoring/" rel="category tag">Process monitoring</a>, <a href="https://imposibrus.space/category/supervisor/" rel="category tag">Supervisor</a>, <a href="https://imposibrus.space/category/ubuntu/" rel="category tag">Ubuntu</a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.space/supervisor-overview/" rel="bookmark"><time class="entry-date published" datetime="2014-02-23T22:22:13+03:00">23.02.2014</time><time class="updated" datetime="2023-04-01T13:21:13+03:00">01.04.2023</time></a></span><span class="byline"><span class="author vcard"><span class="screen-reader-text">Автор </span><a class="url fn n" href="https://imposibrus.space/author/imposibrus/">imposibrus</a></span></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.space/category/centos/" rel="category tag">CentOS</a>, <a href="https://imposibrus.space/category/process-monitoring/" rel="category tag">Process monitoring</a>, <a href="https://imposibrus.space/category/supervisor/" rel="category tag">Supervisor</a>, <a href="https://imposibrus.space/category/ubuntu/" rel="category tag">Ubuntu</a></span>			</footer>
 
 </article>
 

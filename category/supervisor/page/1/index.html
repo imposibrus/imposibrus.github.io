@@ -139,19 +139,38 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 		<h2 class="entry-title"><a href="https://imposibrus.space/supervisor-overview/" rel="bookmark">Supervisor — система управления процессами</a></h2>	</header>
 
 	<div class="entry-content">
-		<p>Если на вашем сервере работает несколько разных приложений (например, Node.js-, Ruby- или Python-приложение или PHP-скрипт, который должен быть всегда запущен (daemon)), то Supervisor — то, что вам нужно. Он позволяет управлять процессами из одного файла конфигурации:</p>
+		
+<p>Если на вашем сервере работает несколько разных приложений (например, Node.js-, Ruby- или Python-приложение или PHP-скрипт, который должен быть всегда запущен (daemon)), то Supervisor — то, что вам нужно. Он позволяет управлять процессами из одного файла конфигурации:</p>
+
+
+
 <ul>
 <li>Указывать файлы логов для каждого приложения;</li>
+
+
+
 <li>управлять политиками запуска и перезапуска;</li>
+
+
+
 <li>указывать от какого пользователя запускать приложения и т.д.</li>
 </ul>
+
+
+
 <p>В моем случае есть PHP-скрипт с Websockets-сервером, который должен быть всегда запущен. В начале я запускал его просто через cron, поставив выполнение cron-а на каждый час. Если скрипт падал, то через час он восстанавливался (меньший интервал приводил к багам), это нам не очень подходило. Поэтому я начал искать другие варианты, про Supervisor я слышал уже давно, но в начале он мне показался сложным в настройке, поэтому ушел на дальнюю полку.</p>
-<p>Сегодня я постараюсь рассказать как установить и настроить Supervisor на Ubuntu и CentOS. <a href="https://imposibrus.space/supervisor-overview/#more-52" class="more-link">Читать далее <span class="screen-reader-text">Supervisor — система управления процессами</span></a></p>
-	</div>
+
+
+
+<p>Сегодня я постараюсь рассказать как установить и настроить Supervisor на Ubuntu и CentOS.</p>
+
+
+
+ <a href="https://imposibrus.space/supervisor-overview/#more-52" class="more-link">Читать далее <span class="screen-reader-text">Supervisor — система управления процессами</span></a>	</div>
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.space/supervisor-overview/" rel="bookmark"><time class="entry-date published" datetime="2014-02-23T22:22:13+03:00">23.02.2014</time><time class="updated" datetime="2019-08-08T00:40:32+03:00">08.08.2019</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.space/category/centos/" rel="category tag">CentOS</a>, <a href="https://imposibrus.space/category/process-monitoring/" rel="category tag">Process monitoring</a>, <a href="https://imposibrus.space/category/supervisor/" rel="category tag">Supervisor</a>, <a href="https://imposibrus.space/category/ubuntu/" rel="category tag">Ubuntu</a></span><span class="comments-link"><a href="https://imposibrus.space/supervisor-overview/#respond"><span class="dsq-postid" data-dsqidentifier="52 https://imposibrus.space/?p=52">Добавить комментарий<span class="screen-reader-text"> к записи Supervisor — система управления процессами</span></span></a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.space/supervisor-overview/" rel="bookmark"><time class="entry-date published" datetime="2014-02-23T22:22:13+03:00">23.02.2014</time><time class="updated" datetime="2023-04-01T13:21:13+03:00">01.04.2023</time></a></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.space/category/centos/" rel="category tag">CentOS</a>, <a href="https://imposibrus.space/category/process-monitoring/" rel="category tag">Process monitoring</a>, <a href="https://imposibrus.space/category/supervisor/" rel="category tag">Supervisor</a>, <a href="https://imposibrus.space/category/ubuntu/" rel="category tag">Ubuntu</a></span><span class="comments-link"><a href="https://imposibrus.space/supervisor-overview/#respond"><span class="dsq-postid" data-dsqidentifier="52 https://imposibrus.space/?p=52">Добавить комментарий<span class="screen-reader-text"> к записи Supervisor — система управления процессами</span></span></a></span>			</footer>
 
 </article>
 

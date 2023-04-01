@@ -145,20 +145,53 @@ body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: 
 		<h1 class="entry-title">Node.js и PHP — общие ссессии в Redis</h1>	</header>
 
 	<div class="entry-content">
-		<p>Для чего вообще нужно выносить сессии в базу данных? Например, для sticky-сессий или для доступа к ним из нескольких разных приложений.</p>
-<p>В моем случае был сайт, работающий на PHP, к которому нужно было добавить быстрые сообщения между зарегистрированными пользователями (а-ля Вконтакте). Выбор пал на Websockets, думаю, объяснять почему не стоит. Из платформ я выбрал Node.js. Этот выбор был сделан по следующим причинам:<span id="more-6"></span></p>
+		
+<p>Для чего вообще нужно выносить сессии в базу данных? Например, для sticky-сессий или для доступа к ним из нескольких разных приложений.</p>
+
+
+
+<p>В моем случае был сайт, работающий на PHP, к которому нужно было добавить быстрые сообщения между зарегистрированными пользователями (а-ля Вконтакте). Выбор пал на Websockets, думаю, объяснять почему не стоит. Из платформ я выбрал Node.js. Этот выбор был сделан по следующим причинам:</p>
+
+
+
+<span id="more-6"></span>
+
+
+
 <ol>
 <li>на Node.js есть Socket.io, а в нем есть готовая клиентская библиотека, поддержка всех основных <a href="http://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F_Push" target="_blank" rel="noopener">Push технологий</a> с fallback до flash (привет, IE);</li>
+
+
+
 <li>на PHP был не очень удачный опыт с библиотекой <a href="http://socketo.me/" target="_blank" rel="noopener">Ratchet</a>. Не подумайте, сама библиотека великолепна, но периодически приложение, написанное на ней, перестает отвечать по непонятным причинам. Скорее всего проблема не в ней, а в тонких настройках сервера, но с Socket.io такого не бывало.</li>
+
+
+
 <li>да и просто Node.js такой классный =)</li>
 </ol>
+
+
+
 <p>Сайт на PHP, а сообщения на сайте на Node.js? WHAT!?. Сумасшествие, да? Наверное =). Но мы любим сложные задачи и нестандартные решения.</p>
+
+
+
 <p>Блок с личными сообщениями должен появляться только после авторизации пользователя. Значит нужно в Node.js скрипте проверить авторизовался ли пользователь на сайте (есть ли сессия с определенными параметрами в PHP). Немного теории о том как работают сессии в PHP:</p>
-<blockquote><p>При вызове функции session_start(), во временной папке для сессий, создается новый файл с именем sess_[a-z0-9]{32}, где последние 32 символа — значение cookie PHPSESSID, которая отправляется пользователю. В дальнейшем при изменении массива $_SESSION, он сериализуется(serialize) и сохраняется в этот файл.</p></blockquote>
-<p>Допустим, после того как пользователь вводит свой логин/пароль, в сессию записывается его id из базы данных. Получается из скрипта сообщений нам надо проверить есть ли значение id в его сессии. Первая мысль была, как, наверное и у многих, написать парсер всех файлов в папке с сессиями (да и find и grep никто не отменял).<br>
-</p><div class="spoiler">
-					<div class="title">Пример плохого подхода, не повторять!</div>
-					<div class="text">
+
+
+
+<blockquote class="wp-block-quote">
+<p>При вызове функции session_start(), во временной папке для сессий, создается новый файл с именем sess_[a-z0-9]{32}, где последние 32 символа — значение cookie PHPSESSID, которая отправляется пользователю. В дальнейшем при изменении массива $_SESSION, он сериализуется(serialize) и сохраняется в этот файл.</p>
+</blockquote>
+
+
+
+<p>Допустим, после того как пользователь вводит свой логин/пароль, в сессию записывается его id из базы данных. Получается из скрипта сообщений нам надо проверить есть ли значение id в его сессии. Первая мысль была, как, наверное и у многих, написать парсер всех файлов в папке с сессиями (да и find и grep никто не отменял).</p>
+
+
+
+<details>
+    <summary>Пример плохого подхода, не повторять!</summary>
 <pre class="EnlighterJSRAW" data-enlighter-language="js" data-enlighter-title="">var fs = require('fs'),
     sessDir = '/tmp/'; // папка с сессиями
 
@@ -200,13 +233,31 @@ isAuthorized('qwe', function(auth, file) {
     console.log('qwe is authorized');
   }
 });</pre>
-</div>
-				</div>
-<p>Но… это как-то не красиво, согласны? Постоянно лазить по файловой системе немного накладно, тем более особенность проекта требовала создание сессии на каждого посетителя, поэтому файлов в папке меньше 1000 не бывает. Из этого выходило, что нужно было более быстрое хранилище сессий, которое поддерживало бы PHP и Node.js. Мне давно уже хотелось попробовать <a href="http://redis.io/" target="_blank" rel="noopener">Redis</a> как хранилище сессий, а тут как раз задачка подвернулась как нельзя кстати.</p>
+</details>
+
+
+
+<p></p>
+
+
+
+<p>Но… это как-то не красиво, согласны? Постоянно лазить по файловой системе немного накладно, тем более особенность проекта требовала создание сессии на каждого посетителя, поэтому файлов в папке меньше 1000 не бывает. Из этого выходило, что нужно было более быстрое хранилище сессий, которое поддерживало бы PHP и Node.js. Мне давно уже хотелось попробовать <a rel="noopener" href="http://redis.io/" target="_blank">Redis</a> как хранилище сессий, а тут как раз задачка подвернулась как нельзя кстати.</p>
+
+
+
 <p>Для справки: Redis — это простое и очень быстрое key-value хранилище. Его поддерживают многие платформы (PHP и Node.js в том числе), его просто установить (на Debian/Ubuntu ставится из пакетного менеджера, на CentOS я билдил сам), в будущем я все равно планировал переносить сессии в базу данных, так что это будет проба пера =). Хватит теории, пора действовать!))</p>
+
+
+
 <p>Для начала нужно <a title="Установка Redis на Ubuntu и CentOS" href="https://imposibrus.space/install-redis-ubuntu-and-centos/" target="_blank" rel="noopener">установить Redis</a>. Дальше нам понадобится расширение для PHP, которое позволит сохранять сессии в Redis — <a href="https://github.com/nicolasff/phpredis" target="_blank" rel="noopener">phpredis</a>. Инструкция по установке есть на странице расширения, я пробегусь только кратко:</p>
+
+
+
 <ol>
 <li>Чтобы скомпилировать библиотеку, понадобится dev-пакет php5.</li>
+
+
+
 <li>Придется собрать его из исходников самим, это не страшно =).
 <pre class="crayon:false">$ sudo apt-get install php5-dev
 $ cd /tmp && wget https://github.com/nicolasff/phpredis/archive/master.zip
@@ -217,25 +268,53 @@ $ ./configure
 $ make
 $ sudo make install</pre>
 </li>
-<li>Осталось его включить: для Ubuntu с PHP5.4+
-<pre class="crayon:false">$ sudo sh -c "echo 'extension=redis.so' > /etc/php5/apache2/conf.d/redis.ini"
+
+
+
+<li>Осталось его включить: для Ubuntu с PHP5.4+ <pre class="crayon:false">$ sudo sh -c "echo 'extension=redis.so' > /etc/php5/apache2/conf.d/redis.ini"
 $ cd /etc/php5/cli && sudo ln -s ../apache2/conf.d/redis.ini
-$ sudo service apache2 restart</pre>
-</li>
+$ sudo service apache2 restart</pre></li>
 </ol>
+
+
+
 <p>Самое время проверить работает ли расширение, небольшой код для теста:</p>
-<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-title=""><?php
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group=""><?php
 $redis = new Redis();
 $redis->connect("127.0.0.1");
 print $redis->echo("ping\n"); // должен вывести ping</pre>
+
+
+
 <p>Если после запуска появилась надпись «ping», значит все хорошо, идем дальше. Для PHP есть куча готовых классов для работы с сессиями в Redis, но мне не хотелось править код, а хотелось чтоб сессии просто стали хранится в базе. Для этого нужно подправить php.ini.</p>
-<pre class="crayon:false">$ vi /etc/php5/apache2/php.ini</pre>
+
+
+
+<pre class="wp-block-preformatted">$ vi /etc/php5/apache2/php.ini</pre>
+
+
+
 <p>Ищем строку session.save_handler и заменяем в ней files на redis. Дальше ищем строку session.save_path (возможно ее нет — добавляем) и приравниваем ее к «tcp://localhost:6379». Получится примерно так:</p>
-<pre class="EnlighterJSRAW" data-enlighter-language="ini" data-enlighter-title="php.ini">session.save_handler = redis
+
+
+
+<pre class="wp-block-preformatted">session.save_handler = redis
 session.save_path = "tcp://localhost:6379"</pre>
+
+
+
 <p>Перезапускаем apache и — та-да! Ваши сессии отныне хранятся в Redis =).</p>
+
+
+
 <p>Хорошо, полдела сделано. Я решил, что после загрузки страницы, будет отсылаться XHR-запрос (AJAX) скрипту сообщений. В заголовках этого запроса будет cookie с PHP сессией, по которой можно будет определить авторизован ли пользователь. Пример кода проверки авторизации:</p>
-<pre class="EnlighterJSRAW" data-enlighter-language="js" data-enlighter-title="app.js">var express = require('express.io'),
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="js" data-enlighter-theme="" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">var express = require('express.io'),
     app = express(),
     redis = require('redis'),
     redisClient = redis.createClient();
@@ -297,13 +376,19 @@ app.all('*', function(req, res) {
 app.http().io().listen(3000, function(){
   console.log('Express server listening on port 3000');
 });</pre>
+
+
+
 <p>Код достаточно абстрактный, местами избыточный, местами поверхностный. Тут стоит обратить внимание на строки «PHPSESSID» и «PHPREDIS_SESSION». Первая — стандартное значение в php.ini, второе — в библиотеке phpredis. Не забудьте проверить значения в своих настройках. Я использую библиотеку express.io из-за ее простоты, как понятно из названия, она объединяет в себе отличный фреймворк Express и библиотеку Socket.io.</p>
+
+
+
 <p>Надеюсь кому то будет полезна данная информация.</p>
 	</div>
 
 	
 	<footer class="entry-footer">
-		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.space/node-js-and-php-shared-sessions-in-redis/" rel="bookmark"><time class="entry-date published" datetime="2014-02-15T17:38:21+03:00">15.02.2014</time><time class="updated" datetime="2019-08-08T00:41:50+03:00">08.08.2019</time></a></span><span class="byline"><span class="author vcard"><span class="screen-reader-text">Автор </span><a class="url fn n" href="https://imposibrus.space/author/imposibrus/">imposibrus</a></span></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.space/category/node-js/" rel="category tag">Node.js</a>, <a href="https://imposibrus.space/category/php/" rel="category tag">PHP</a>, <a href="https://imposibrus.space/category/redis/" rel="category tag">Redis</a></span><span class="tags-links"><span class="screen-reader-text">Метки </span><a href="https://imposibrus.space/tag/featured/" rel="tag">featured</a></span>			</footer>
+		<span class="posted-on"><span class="screen-reader-text">Опубликовано </span><a href="https://imposibrus.space/node-js-and-php-shared-sessions-in-redis/" rel="bookmark"><time class="entry-date published" datetime="2014-02-15T17:38:21+03:00">15.02.2014</time><time class="updated" datetime="2023-04-01T13:35:10+03:00">01.04.2023</time></a></span><span class="byline"><span class="author vcard"><span class="screen-reader-text">Автор </span><a class="url fn n" href="https://imposibrus.space/author/imposibrus/">imposibrus</a></span></span><span class="cat-links"><span class="screen-reader-text">Рубрики </span><a href="https://imposibrus.space/category/node-js/" rel="category tag">Node.js</a>, <a href="https://imposibrus.space/category/php/" rel="category tag">PHP</a>, <a href="https://imposibrus.space/category/redis/" rel="category tag">Redis</a></span><span class="tags-links"><span class="screen-reader-text">Метки </span><a href="https://imposibrus.space/tag/featured/" rel="tag">featured</a></span>			</footer>
 
 </article>
 
