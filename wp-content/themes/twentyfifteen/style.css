@@ -12,7 +12,7 @@ blockquote, q {-webkit-hyphens: none;-moz-hyphens: none;-ms-hyphens: none;hyphen
 a:focus {outline: 2px solid #c1c1c1;outline: 2px solid rgba(51,51,51,.3);}
 a:hover, a:active {outline: 0;}
 a img {border: 0;}
-.social-navigation a:before, .secondary-toggle:before, .dropdown-toggle:after, .bypostauthor > article .fn:after, .comment-reply-title small a:before, .comment-navigation .nav-next a:after, .comment-navigation .nav-previous a:before, .posted-on:before, .byline:before, .cat-links:before, .tags-links:before, .comments-link:before, .entry-format:before, .edit-link:before, .full-size-link:before, .pagination .prev:before, .pagination .next:before, .image-navigation a:before, .image-navigation a:after, .format-link .entry-title a:after, .entry-content .more-link:after, .entry-summary .more-link:after, .author-link:after {-moz-osx-font-smoothing: grayscale;-webkit-font-smoothing: antialiased;display: inline-block;font-family: "Genericons";font-size: 16px;font-style: normal;font-weight: normal;font-variant: normal;line-height: 1;speak: none;text-align: center;text-decoration: inherit;text-transform: none;vertical-align: top;}
+.social-navigation a:before, .secondary-toggle:before, .dropdown-toggle:after, .bypostauthor > article .fn:after, .comment-reply-title small a:before, .comment-navigation .nav-next a:after, .comment-navigation .nav-previous a:before, .posted-on:before, .byline:before, .cat-links:before, .tags-links:before, .comments-link:before, .entry-format:before, .edit-link:before, .full-size-link:before, .pagination .prev:before, .pagination .next:before, .image-navigation a:before, .image-navigation a:after, .format-link .entry-title a:after, .entry-content .more-link:after, .entry-summary .more-link:after, .author-link:after {-moz-osx-font-smoothing: grayscale;-webkit-font-smoothing: antialiased;display: inline-block;font-family: "Genericons";font-size: 16px;font-style: normal;font-weight: normal;font-variant: normal;line-height: 1;speak: never;text-align: center;text-decoration: inherit;text-transform: none;vertical-align: top;}
 body, button, input, select, textarea {color: #333;font-family: "Noto Serif",serif;font-size: 15px;font-size: 1.5rem;line-height: 1.6;}
 h1, h2, h3, h4, h5, h6 {clear: both;font-weight: 700;}
 p {margin-bottom: 1.6em;}
@@ -187,9 +187,12 @@ blockquote.aligncenter, .wp-caption.aligncenter, img.aligncenter {clear: both;ma
 .widget button, .widget input[type="button"], .widget input[type="reset"], .widget input[type="submit"] {font-size: 12px;font-size: 1.2rem;padding: .7917em 1.5833em;}
 .widget input[type="text"], .widget input[type="email"], .widget input[type="url"], .widget input[type="password"], .widget input[type="search"], .widget textarea {padding: .375em;}
 .widget-title {color: #333;font-family: "Noto Sans",sans-serif;margin: 0 0 1.6em;letter-spacing: .04em;text-transform: uppercase;}
-.widget > :last-child {margin-bottom: 0;}
+.widget > :last-child, .widget > nav > :last-child {margin-bottom: 0;}
 .widget_calendar table {margin: 0;}
-.widget_calendar td, .widget_calendar th {line-height: 2.3333;text-align: center;padding: 0;}
+.widget_calendar .wp-calendar-nav {display: table;width: 100%;}
+.widget_calendar .wp-calendar-nav span {display: table-cell;}
+.widget_calendar .wp-calendar-nav-prev, .widget_calendar .wp-calendar-nav-next {width: 40%;}
+.widget_calendar td, .widget_calendar th, .widget_calendar .wp-calendar-nav span {line-height: 2.3333;text-align: center;padding: 0;}
 .widget_calendar caption {font-family: "Noto Serif",serif;font-weight: 700;margin: 0 0 1.6em;letter-spacing: .04em;text-transform: uppercase;}
 .widget_calendar tbody a {-webkit-tap-highlight-color: rgba(255,255,255,.3);background-color: #333;color: #fff;display: block;font-weight: 700;}
 .widget_calendar tbody a:hover, .widget_calendar tbody a:focus {background-color: #707070;background-color: rgba(51,51,51,.7);color: #fff;}
@@ -475,8 +478,10 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.widget blockquote.aligncenter, .widget .wp-caption.aligncenter, .widget img.aligncenter {margin-top: .5em;margin-bottom: 1.5em;}
 	.widget .wp-caption.alignleft, .widget .wp-caption.alignright, .widget .wp-caption.aligncenter {margin-bottom: 1em;}
 	.widget-title {margin: 0 0 1.5em;}
-	.widget_calendar td, .widget_calendar th {line-height: 2.9286;}
+	.widget_calendar td, .widget_calendar th, .widget_calendar .wp-calendar-nav span {line-height: 2.9286;}
 	.widget_calendar caption {margin: 0 0 1.5em;}
+	.widget_calendar .wp-calendar-table {margin-bottom: 0;}
+	.widget_calendar .wp-calendar-nav {margin: 0 0 1.5em;}
 	.widget_archive li, .widget_categories li, .widget_links li, .widget_meta li, .widget_nav_menu li, .widget_pages li, .widget_recent_comments li, .widget_recent_entries li {padding: .9643em 0;}
 	.widget_categories .children, .widget_nav_menu .sub-menu, .widget_pages .children {margin: .9643em 0 0 1em;padding-top: .9643em;}
 	.widget_rss li {margin-bottom: 1.5em;}
@@ -487,7 +492,8 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.entry-content h2, .entry-summary h2, .page-content h2, .comment-content h2 {font-size: 29px;font-size: 2.9rem;line-height: 1.2069;margin-top: 1.931em;margin-bottom: .9655em;}
 	.entry-content h3, .entry-summary h3, .page-content h3, .comment-content h3 {font-size: 24px;font-size: 2.4rem;line-height: 1.1667;margin-top: 2.3333em;margin-bottom: 1.1667em;}
 	.entry-content h4, .entry-summary h4, .page-content h4, .comment-content h4 {font-size: 20px;font-size: 2rem;line-height: 1.4;margin-top: 2.8em;margin-bottom: 1.4em;}
-	.entry-content h5, .entry-content h6, .entry-summary h5, .entry-summary h6, .page-content h5, .page-content h6, .comment-content h5, .comment-content h6 {font-size: 17px;font-size: 1.7rem;line-height: 1.2353;margin-top: 3.2941em;margin-bottom: 1.6471em;}
+	.entry-content h5, .entry-summary h5, .page-content h5, .comment-content h5 {font-size: 18px;font-size: 1.8rem;line-height: 1.3333;margin-top: 2.6667em;margin-bottom: 1.3333em;}
+	.entry-content h6, .entry-summary h6, .page-content h6, .comment-content h6 {font-size: 17px;font-size: 1.7rem;line-height: 1.2353;margin-top: 3.2941em;margin-bottom: 1.6471em;}
 	.entry-content .more-link:after, .entry-summary .more-link:after {font-size: 24px;top: 2px;}
 	.author-info {margin: 0 9.0909%;padding: 9.0909% 0;}
 	.author-info .avatar {height: 42px;margin: 0 1.6471em 1.6471em 0;width: 42px;}
@@ -562,7 +568,7 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.widget button, .widget input[type="button"], .widget input[type="reset"], .widget input[type="submit"] {font-size: 16px;font-size: 1.6rem;padding: .8125em 1.625em;}
 	.widget input[type="text"], .widget input[type="email"], .widget input[type="url"], .widget input[type="password"], .widget input[type="search"], .widget textarea {padding: .75em;}
 	.widget .wp-caption-text, .widget .gallery-caption {line-height: 1.5;}
-	.widget_calendar td, .widget_calendar th {line-height: 2.9375;}
+	.widget_calendar td, .widget_calendar th, .widget_calendar .wp-calendar-nav span {line-height: 2.9375;}
 	.widget_archive li, .widget_categories li, .widget_links li, .widget_meta li, .widget_nav_menu li, .widget_pages li, .widget_recent_comments li, .widget_recent_entries li {padding: .7188em 0;}
 	.widget_categories .children, .widget_nav_menu .sub-menu, .widget_pages .children {margin: .7188em 0 0 1em;padding-top: .7188em;}
 	.widget_rss .rss-date, .widget_rss cite {font-size: 13px;font-size: 1.3rem;line-height: 1.8462;}
@@ -572,7 +578,8 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.entry-content h2, .entry-summary h2, .page-content h2, .comment-content h2 {font-size: 32px;font-size: 3.2rem;line-height: 1.25;margin-top: 2em;margin-bottom: 1em;}
 	.entry-content h3, .entry-summary h3, .page-content h3, .comment-content h3 {font-size: 27px;font-size: 2.7rem;line-height: 1.1852;margin-top: 2.3704em;margin-bottom: 1.1852em;}
 	.entry-content h4, .entry-summary h4, .page-content h4, .comment-content h4 {font-size: 22px;font-size: 2.2rem;line-height: 1.4545;margin-top: 2.9091em;margin-bottom: 1.4545em;}
-	.entry-content h5, .entry-content h6, .entry-summary h5, .entry-summary h6, .page-content h5, .page-content h6, .comment-content h5, .comment-content h6 {font-size: 19px;font-size: 1.9rem;line-height: 1.2632;margin-top: 3.3684em;margin-bottom: 1.6842em;}
+	.entry-content h5, .entry-summary h5, .page-content h5, .comment-content h5 {font-size: 20px;font-size: 2rem;line-height: 1.4;margin-top: 2.8em;margin-bottom: 1.4em;}
+	.entry-content h6, .entry-summary h6, .page-content h6, .comment-content h6 {font-size: 19px;font-size: 1.9rem;line-height: 1.2632;margin-top: 3.3684em;margin-bottom: 1.6842em;}
 	.entry-content .more-link:after, .entry-summary .more-link:after {top: 3px;}
 	.author-info .avatar {height: 56px;margin: 0 1.6842em 1.6842em 0;width: 56px;}
 	.author-link:after {font-size: 24px;top: 0;}
@@ -659,7 +666,7 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.widget button, .widget input[type="button"], .widget input[type="reset"], .widget input[type="submit"] {font-size: 12px;font-size: 1.2rem;padding: .5417em 1.0833em;}
 	.widget input[type="text"], .widget input[type="email"], .widget input[type="url"], .widget input[type="password"], .widget input[type="search"], .widget textarea {padding: .4583em;}
 	.widget .wp-caption-text, .widget .gallery-caption {font-size: 12px;font-size: 1.2rem;}
-	.widget_calendar td, .widget_calendar th {line-height: 1.9167;}
+	.widget_calendar td, .widget_calendar th, .widget_calendar .wp-calendar-nav span {line-height: 1.9167;}
 	.widget_archive li, .widget_categories li, .widget_links li, .widget_meta li, .widget_nav_menu li, .widget_pages li, .widget_recent_comments li, .widget_recent_entries li {padding: .4583em 0;}
 	.widget_categories .children, .widget_nav_menu .sub-menu, .widget_pages .children {margin: .4583em 0 0 1em;padding-top: .4583em;}
 	.widget_rss .rss-date, .widget_rss cite {font-size: 12px;font-size: 1.2rem;line-height: 1.5;}
@@ -674,7 +681,8 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.entry-content h2, .entry-summary h2, .page-content h2, .comment-content h2 {font-size: 26px;font-size: 2.6rem;line-height: 1.3846;margin-top: 1.8462em;margin-bottom: .9231em;}
 	.entry-content h3, .entry-summary h3, .page-content h3, .comment-content h3 {font-size: 22px;font-size: 2.2rem;line-height: 1.3636;margin-top: 2.1818em;margin-bottom: 1.0909em;}
 	.entry-content h4, .entry-summary h4, .page-content h4, .comment-content h4 {font-size: 18px;font-size: 1.8rem;line-height: 1.3333;margin-top: 2.6667em;margin-bottom: 1.3333em;}
-	.entry-content h5, .entry-content h6, .entry-summary h5, .entry-summary h6, .page-content h5, .page-content h6, .comment-content h5, .comment-content h6 {font-size: 15px;font-size: 1.5rem;line-height: 1.2;margin-top: 3.2em;margin-bottom: 1.6em;}
+	.entry-content h5, .entry-summary h5, .page-content h5, .comment-content h5 {font-size: 16px;font-size: 1.6rem;line-height: 1.25;margin-top: 3.25em;margin-bottom: 1.625em;}
+	.entry-content h6, .entry-summary h6, .page-content h6, .comment-content h6 {font-size: 15px;font-size: 1.5rem;line-height: 1.2;margin-top: 3.2em;margin-bottom: 1.6em;}
 	.entry-content .more-link:after, .entry-summary .more-link:after {font-size: 16px;top: 5px;}
 	.author-info {margin: 0 10%;padding: 10% 0;}
 	.author-info .avatar {height: 36px;margin: 0 1.5em 1.5em 0;width: 36px;}
@@ -753,7 +761,7 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.widget input[type="text"], .widget input[type="email"], .widget input[type="url"], .widget input[type="password"], .widget input[type="search"], .widget textarea {padding: .5em;}
 	.widget .wp-caption-text, .widget .gallery-caption {line-height: 1.4583;padding: .5833em 0;}
 	.widget_calendar caption {margin: 0 0 1.9286em;}
-	.widget_calendar td, .widget_calendar th {line-height: 1.9286;}
+	.widget_calendar td, .widget_calendar th, .widget_calendar .wp-calendar-nav span {line-height: 1.9286;}
 	.widget_archive li, .widget_categories li, .widget_links li, .widget_meta li, .widget_nav_menu li, .widget_pages li, .widget_recent_comments li, .widget_recent_entries li {padding: .4643em 0;}
 	.widget_categories .children, .widget_nav_menu .sub-menu, .widget_pages .children {margin: .4643em 0 0 1em;padding-top: .4643em;}
 	.widget_rss .rss-date, .widget_rss cite {line-height: 1.75;}
@@ -763,7 +771,8 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.entry-content h2, .entry-summary h2, .page-content h2, .comment-content h2 {font-size: 29px;font-size: 2.9rem;line-height: 1.2069;margin-top: 1.931em;margin-bottom: .9655em;}
 	.entry-content h3, .entry-summary h3, .page-content h3, .comment-content h3 {font-size: 24px;font-size: 2.4rem;line-height: 1.1667;margin-top: 2.3333em;margin-bottom: 1.1667em;}
 	.entry-content h4, .entry-summary h4, .page-content h4, .comment-content h4 {font-size: 20px;font-size: 2rem;line-height: 1.4;margin-top: 2.8em;margin-bottom: 1.4em;}
-	.entry-content h5, .entry-content h6, .entry-summary h5, .entry-summary h6, .page-content h5, .page-content h6, .comment-content h5, .comment-content h6 {font-size: 17px;font-size: 1.7rem;line-height: 1.2353;margin-top: 3.2941em;margin-bottom: 1.6471em;}
+	.entry-content h5, .entry-summary h5, .page-content h5, .comment-content h5 {font-size: 18px;font-size: 1.8rem;line-height: 1.3333;margin-top: 2.6667em;margin-bottom: 1.3333em;}
+	.entry-content h6, .entry-summary h6, .page-content h6, .comment-content h6 {font-size: 17px;font-size: 1.7rem;line-height: 1.2353;margin-top: 3.2941em;margin-bottom: 1.6471em;}
 	.entry-content .more-link:after, .entry-summary .more-link:after {font-size: 24px;top: 2px;}
 	.author-info .avatar {height: 42px;margin: 0 1.6471em 1.6471em 0;width: 42px;}
 	.author-link:after {top: 3px;}
@@ -833,7 +842,7 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.widget button, .widget input[type="button"], .widget input[type="reset"], .widget input[type="submit"] {font-size: 13px;font-size: 1.3rem;padding: .8462em 1.6923em;}
 	.widget input[type="text"], .widget input[type="email"], .widget input[type="url"], .widget input[type="password"], .widget input[type="search"], .widget textarea {padding: .5em;}
 	.widget .wp-caption-text, .widget .gallery-caption {font-size: 13px;font-size: 1.3rem;line-height: 1.5385;padding: .6154em 0;}
-	.widget_calendar td, .widget_calendar th {line-height: 1.9375;}
+	.widget_calendar td, .widget_calendar th, .widget_calendar .wp-calendar-nav span {line-height: 1.9375;}
 	.widget_calendar caption {margin: 0 0 1.5em;}
 	.widget_archive li, .widget_categories li, .widget_links li, .widget_meta li, .widget_nav_menu li, .widget_pages li, .widget_recent_comments li, .widget_recent_entries li {padding: .4688em 0;}
 	.widget_categories .children, .widget_nav_menu .sub-menu, .widget_pages .children {margin: .4688em 0 0 1em;padding-top: .4688em;}
@@ -844,7 +853,8 @@ p > embed, p > iframe, p > object, p > video {margin-bottom: 0;}
 	.entry-content h2, .entry-summary h2, .page-content h2, .comment-content h2 {font-size: 32px;font-size: 3.2rem;line-height: 1.25;margin-top: 2em;margin-bottom: 1em;}
 	.entry-content h3, .entry-summary h3, .page-content h3, .comment-content h3 {font-size: 27px;font-size: 2.7rem;line-height: 1.1852;margin-top: 2.3704em;margin-bottom: 1.1852em;}
 	.entry-content h4, .entry-summary h4, .page-content h4, .comment-content h4 {font-size: 22px;font-size: 2.2rem;line-height: 1.4545;margin-top: 2.9091em;margin-bottom: 1.4545em;}
-	.entry-content h5, .entry-content h6, .entry-summary h5, .entry-summary h6, .page-content h5, .page-content h6, .comment-content h5, .comment-content h6 {font-size: 19px;font-size: 1.9rem;line-height: 1.2632;margin-top: 3.3684em;margin-bottom: 1.6842em;}
+	.entry-content h5, .entry-summary h5, .page-content h5, .comment-content h5 {font-size: 20px;font-size: 2rem;line-height: 1.4;margin-top: 2.8em;margin-bottom: 1.4em;}
+	.entry-content h6, .entry-summary h6, .page-content h6, .comment-content h6 {font-size: 19px;font-size: 1.9rem;line-height: 1.2632;margin-top: 3.3684em;margin-bottom: 1.6842em;}
 	.entry-content .more-link:after, .entry-summary .more-link:after {top: 3px;}
 	.author-info .avatar {height: 56px;margin: 0 1.6842em 1.6842em 0;width: 56px;}
 	.author-link:after {font-size: 24px;top: 0;}

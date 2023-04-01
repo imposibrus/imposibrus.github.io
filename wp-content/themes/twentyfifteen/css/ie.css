@@ -74,7 +74,8 @@ blockquote.aligncenter, .wp-caption.aligncenter, img.aligncenter {margin-top: .4
 .entry-content h2, .entry-summary h2, .page-content h2, .comment-content h2 {font-size: 32px;line-height: 1.25;margin-top: 2em;margin-bottom: 1em;}
 .entry-content h3, .entry-summary h3, .page-content h3, .comment-content h3 {font-size: 27px;line-height: 1.1852;margin-top: 2.3704em;margin-bottom: 1.1852em;}
 .entry-content h4, .entry-summary h4, .page-content h4, .comment-content h4 {font-size: 22px;line-height: 1.4545;margin-top: 2.9091em;margin-bottom: 1.4545em;}
-.entry-content h5, .entry-content h6, .entry-summary h5, .entry-summary h6, .page-content h5, .page-content h6, .comment-content h5, .comment-content h6 {font-size: 19px;line-height: 1.2632;margin-top: 3.3684em;margin-bottom: 1.6842em;}
+.entry-content h5, .entry-summary h5, .page-content h5, .comment-content h5 {font-size: 20px;line-height: 1.4;margin-top: 2.8em;margin-bottom: 1.4em;}
+.entry-content h6, .entry-summary h6, .page-content h6, .comment-content h6 {font-size: 19px;line-height: 1.2632;margin-top: 3.3684em;margin-bottom: 1.6842em;}
 .entry-content .more-link:after {font-size: 24px;top: 3px;}
 .author-info {margin: 0 9.0909%;padding: 9.0909% 0;}
 .author-info .avatar {margin: 0 1.6842em 1.6842em 0;width: 56px;height: 56px;}
